@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <div class="card border-dark bg-dark-subtle">
+                <div class="card-body">
+                    <h5 class="card-title">Please add a new menu</h5>
+                    <p class="card-text">
+                        <form action="{{url_for('add_menus')}}" method="post">
+                          <label for="manus_name" class="form-label">Menu Name</label>
+                          <input type="text" class="form-control" id="menus_name" name="menus_name" minlength="3" maxlength="25" required aria-describedby="menu_name">
+                        </form>   
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

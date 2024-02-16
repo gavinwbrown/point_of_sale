@@ -1,34 +1,43 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
-<div class="container ">
-    <div class="row">
-        <div class="col-12 text-center py-4">
-            <a href="{{url_for('add_menu') }}" class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
-        </div>
+<div class="container">
+    <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-4 text-center py-4">
+                <a href="{{url_for('add_menus') }}" class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add
+                    Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 text-center py-4">
+                <a href="{{url_for('add_sub_menus') }}"
+                    class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add Sub-Menu <i
+                        class="fas fa-2x fa-plus-square right ps-3"></i></a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 text-center py-4">
+                <a href="{{url_for('add_items') }}" class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add
+                    Item <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
+            </div>
     </div>
     <div class="row">
-        <div class="col-12 text-center py-4">
-            <a href="{{url_for('add_sub_menu') }}" class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add Sub-Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-center py-4">
-            <a href="{{url_for('add_item') }}" class="d-inline-flex align-items-center btn text-bg-success btn-lg">Add Item <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-center py-4">
-            <div class="card" style="width: 18rem;">
+    {% for menu in menus %}
+    
+        <div class="col-12 col-md-6 col-lg-4 text-center py-4">
+            <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
+                    <h5 class="card-title">{{ menu.menus_name }}</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up the
+                        bulk of the card's content.
+                    </p>
+                    <a href="{{url_for('edit_menus', menus_id=menu.id) }}"
+                        class="d-inline-flex align-items-center btn text-bg-success btn-sm">Edit <i
+                            class="fas fa-2x fa-plus-square right ps-3"></i></a>
+                    <a href="{{url_for('delete_menus', menus_id=menu.id) }}"
+                        class="d-inline-flex align-items-center btn text-bg-danger btn-sm">Delete <i
+                            class="fas fa-2x fa-plus-square right ps-3"></i></a>
                 </div>
-              </div>
+            </div>
         </div>
+    
+    {% endfor %}
     </div>
     <div class="row">
         <div class="col-12 text-center py-4">
@@ -41,4 +50,5 @@
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}
+</div>
