@@ -6,17 +6,29 @@
         <div class="col-12 text-center py-4">
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
-                    <h5 class="card-title">Please add a new menu</h5>
+                    <h5 class="card-title">Add A New Menu</h5>
                     <p class="card-text">
-                        <form action="{{url_for('add_menus')}}" method="post">
-                          <label for="manus_name" class="form-label">Menu Name</label>
-                          <input type="text" class="form-control" id="menus_name" name="menus_name" minlength="3" maxlength="25" required aria-describedby="menu_name">
-                        </form>   
+                    <form class="row" action="{{ url_for('add_menus') }}" method="POST">
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="menus_name" name="menus_name" minlength="3"
+                                maxlength="25" required aria-describedby="menu_name"
+                                placeholder="Menu Name (3-25 characters)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="menus_description" name="menus_description"
+                                minlength="3" maxlength="29" required aria-describedby="menu_description"
+                                placeholder="Menu Description (3-29 characters)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <button type="submit"
+                                class="d-inline-flex btn align-items-center justify-content-center text-bg-success btn-lg">Add
+                                Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></button>
+                        </div>
+                    </form>
                     </p>
-                    
                 </div>
             </div>
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}

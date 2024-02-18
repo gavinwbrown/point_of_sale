@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <div class="card border-dark bg-dark-subtle">
+                <div class="card-body">
+                    <h5 class="card-title">Edit existing menu</h5>
+                    <p class="card-text">
+                    <div class="rows">
+                        <form action="{{ url_for('edit_menus', menus_id=menus.id) }}" method="POST">
+                            <div class="col-12 py-3">
+
+                                <input type="text" class="form-control" id="menus_name" name="menus_name" minlength="3"
+                                    maxlength="25" required aria-describedby="menu_name"
+                                    value="{{ menus.menus_name }}">
+                            </div>
+                            <div class="col-12 py-3">
+                                <input type="text" class="form-control" id="menus_description" name="menus_description"
+                                    minlength="3" maxlength="29" required aria-describedby="menu_description"
+                                    value="{{ menus.menus_description }}">
+                            </div>
+                            <div class="col-12 py-3">
+                                <button type="submit" class="d-inline-flex align-items-center justify-content-center btn btn-primary text-bg-success">Update Menu <i
+                                    class="fas fa-2x fa-edit right ps-3"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
