@@ -14,10 +14,12 @@
                                 <option selected>Choose A Menu</option>
 
                                 {% for menu in menus %}
+
                                 <option value="{{ menu.id }}">{{ menu.menus_name }}</option>
+                                
                                 {% endfor %}
                                 
-                              </select>
+                            </select>
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="submenu_name" name="submenu_name" minlength="3"

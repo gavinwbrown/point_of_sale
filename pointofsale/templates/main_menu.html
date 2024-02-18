@@ -17,6 +17,7 @@
         </div>
     </div>
     <div class="row justify-content-center py-2">
+
         {% for menu in menus %}
 
         <div class="col-12 col-md-6 col-lg-4 text-center py-2">
@@ -32,7 +33,7 @@
                         data-bs-toggle="modal" data-bs-target="#deleteModal">
                         Delete <i class="fas fa-2x fa-minus-square ps-2"></i>
                     </button>
-                    <a href="" class="btn text-bg-primary btn-sm my-3 d-inline-flex align-items-center justify-content-center gap-2 col-8 mx-auto">View Menu <i class="fas fa-2x right ps-3 fa-eye"></i></a>
+                    <a href="{{ url_for('view_submenus', menus_id=menu.id) }}" class="btn text-bg-primary btn-sm my-3 d-inline-flex align-items-center justify-content-center gap-2 col-8 mx-auto">View Menu <i class="fas fa-2x right ps-3 fa-eye"></i></a>
 
                     <!-- Modal -->
                     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="DeleteLabel"
@@ -65,6 +66,7 @@
         </div>
 
         {% endfor %}
+
     </div>
     
     <div class="row">
@@ -79,4 +81,5 @@
     </div>
 
     {% endblock %}
+
 </div>

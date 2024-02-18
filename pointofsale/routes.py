@@ -14,9 +14,6 @@ def main_menu():
     return render_template("main_menu.html", menus=menus)
 
 
-
-
-
 @app.route("/add_menus", methods=["GET", "POST"])
 def add_menus():
     if request.method == "POST":
@@ -43,6 +40,7 @@ def edit_menus(menus_id):
         return redirect(url_for("main_menu"))
     return render_template("edit_menus.html", menus=menus)
 
+
 @app.route("/delete_menus/<int:menus_id>")
 def delete_menus(menus_id):
     menus = Menus.query.get_or_404(menus_id)
@@ -65,6 +63,13 @@ def add_sub_menus():
         return redirect(url_for("main_menu"))
     return render_template("add_sub_menus.html", menus=menus)
 
+
+@app.route("/view_submenus/<int:menus_id>")
+def view_submenus(menus_id):
+    submenus = list(Submenus.query.filter_by(menus_id=menus_id).all())
+    return redirect(url_for("main_menu", submenus=submenus))
+
+
 @app.route("/edit_submenus/<int:menus_id>", methods=["GET", "POST"])
 def edit_submenus(menus_id):
     submenus = Submenus.query.get_or_404(menus_id)
@@ -76,7 +81,7 @@ def edit_submenus(menus_id):
         db.session.add(submenus)
         db.session.commit()
         return redirect(url_for("main_menu"))
-    return render_template("edit_submenus.html", sub_menus=submenus)
+    return render_template("edit_submenus.html", submenus=submenus)
 
 
 @app.route("/add_items", methods=["GET", "POST"])
