@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <div class="card border-dark bg-dark-subtle">
+                <div class="card-body">
+                    <h5 class="card-title">Delete Menu</h5>
+                    <p class="card-text">
+                    <div class="rows">
+                        <form action="{{ url_for('delete_menus', menus_id=menus.id) }}" method="POST">
+                            <div class="col-12 py-3">
+                                <p aria-describedby="delete_description">Deleting a Menu deletes all associated Sub-Menus and Items.</p>
+                                <p aria-describedby="delete_description">Red button to confirm deletion of {{menus.menus_name }}.</p>
+                            <div class="col-12 py-3">
+                                <a href="{{ url_for('main_menu') }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel<i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                                <button type="submit" class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-lg">Delete<i
+                                    class="fas fa-2x fa-minus-square right ps-3"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
