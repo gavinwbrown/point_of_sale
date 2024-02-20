@@ -11,7 +11,7 @@ class Menus(db.Model):
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
-        return self.menus_name, self.menus_description
+        return self.menus_name
 
 
 class Submenus(db.Model):

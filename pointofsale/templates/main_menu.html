@@ -7,7 +7,7 @@
                 Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
         </div>
         <div class="col-12 col-md-6 col-lg-4 text-center pt-2">
-            <a href="{{url_for('add_sub_menus') }}"
+            <a href="{{url_for('add_submenus') }}"
                 class="d-inline-flex btn w-100 align-items-center justify-content-center text-bg-success btn-lg">Add Sub-Menu <i
                     class="fas fa-2x fa-plus-square right ps-3"></i></a>
         </div>
@@ -39,17 +39,6 @@
 
         {% endfor %}
 
-    </div>
-    
-    <div class="row">
-        <div class="col-12 text-center py-4">
-            <span>Sub menus displayed here ie. hot, cold etc</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-center py-4">
-            <span>Items displayed here ie. coffee, tea etc</span>>
-        </div>
     </div>
 
     {% endblock %}
