@@ -77,7 +77,7 @@ def edit_submenus(submenus_id):
         submenus.submenu_description=request.form.get("submenus_description")
         db.session.add(submenus)
         db.session.commit()
-        return redirect(url_for("main_menu"))
+        return redirect(url_for("view_submenus", menus_id=submenus.menus_id))
     return render_template("edit_submenus.html", submenus=submenus)
 
 
