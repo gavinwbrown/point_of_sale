@@ -81,6 +81,16 @@ def edit_submenus(submenus_id):
     return render_template("edit_submenus.html", submenus=submenus)
 
 
+@app.route("/delete_submenus/<int:submenus_id>", methods=["GET", "POST"])
+def delete_submenus(submenus_id):
+    submenus = Submenus.query.get_or_404(submenus_id)
+    if request.method == "POST":
+        db.session.delete(submenus)
+        db.session.commit()
+        return redirect(url_for("view_submenus", menus_id=submenus.menus_id))
+    return render_template("delete_submenus.html", submenus=submenus)
+
+
 @app.route("/add_items", methods=["GET", "POST"])
 def add_items():
     return render_template("add_items.html")

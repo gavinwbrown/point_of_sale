@@ -19,7 +19,7 @@ class Submenus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     submenu_name = db.Column(db.String(25), unique=True, nullable=False)
     submenu_description = db.Column(db.String(29), nullable=False)
-    items = db.relationship("Items", backref="submenu", cascade="all, delete", lazy=True)
+    items = db.relationship("Items", backref="submenus", cascade="all, delete", lazy=True)
     menus_id = db.Column(db.Integer, db.ForeignKey("menus.id"), nullable=False)
     
    
