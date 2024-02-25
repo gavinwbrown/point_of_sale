@@ -6,15 +6,15 @@
         <div class="col-12 text-center py-4">
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
-                    <h5 class="card-title">Delete Sub-Menu</h5>
+                    <h5 class="card-title">Delete Item</h5>
                     <p class="card-text">
                     <div class="rows">
-                        <form action="{{ url_for('delete_submenus', submenus_id=submenus.id) }}" method="POST">
+                        <form action="{{ url_for('delete_items', submenus_id=submenus_id) }}" method="POST">
                             <div class="col-12 py-3">
-                                <p aria-describedby="delete_description">Deleting a Sub-Menu deletes all associated Items.</p>
-                                <p aria-describedby="delete_description">Red button to confirm deletion of {{submenus.submenu_name }}.</p>
+                                <p aria-describedby="delete_description">Deleting an Item deletes just the item.</p>
+                                <p aria-describedby="delete_description">Red button to confirm deletion of {{items.items_name }}.</p>
                             <div class="col-12 py-3">
-                                <a href="{{ url_for('view_submenus', submenus_id=submenus.menus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel<i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                                <a href="{{ url_for('view_items', menus_id=items.submenus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel<i class="fas fa-2x fa-window-close right ps-3"></i></a>
                                 <button type="submit" class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-lg">Delete<i
                                     class="fas fa-2x fa-minus-square right ps-3"></i></button>
                             </div>
