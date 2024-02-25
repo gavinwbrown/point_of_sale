@@ -2,30 +2,46 @@
 
 <div class="container">
     <div class="row justify-content-center py-2">
+        <div class="col-sm-12 col-md-6 text-center pt-2">
+            <a href="{{ url_for('main_menu') }}"
+                class="d-inline-flex w-100 align-items-center justify-content-center btn text-bg-primary btn-lg">Back To Menus <i
+                    class="fas fa-2x fa-window-close right ps-3"></i></a>
+        </div>
+        <div class="col-sm-12 col-md-6 text-center pt-2">
+            <a href="{{url_for('add_submenus', menus_id=menus.id) }}"
+                class="d-inline-flex w-100 btn align-items-center justify-content-center text-bg-success btn-lg">Add
+                Sub-Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center py-2">
 
-        {% for submenu in submenus %}
+    {% for submenu in submenus %}
 
-        <div class="col-12 col-md-6 col-lg-4 text-center py-2">
-            <div class="card border-dark bg-dark-subtle">
-                <div class="card-body">
-                    <h5 class="card-title">{{ submenu.submenu_name }}</h5>
-                    <p class="card-text">{{ submenu.submenu_description }}</p>
-                    <a href="{{ url_for('edit_submenus', submenus_id=submenu.id) }}"
-                        class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-success btn-sm">Edit <i
-                            class="fas fa-2x fa-edit right ps-3"></i></a>
-                    <a href="{{ url_for('delete_submenus', submenus_id=submenu.id) }}"
-                        class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-danger btn-sm">Delete <i
-                            class="fas fa-2x fa-minus-square right ps-2"></i></a>
-                    <a href="{{ url_for('view_items', submenus_id=submenu.id) }}" class="btn text-bg-primary btn-sm my-3 d-inline-flex align-items-center justify-content-center gap-2 col-8 mx-auto">View Items <i class="fas fa-2x right ps-3 fa-eye"></i></a>
-                
-                </div>
+    <div class="col-12 col-md-6 col-lg-4 text-center py-2">
+        <div class="card border-dark bg-dark-subtle">
+            <div class="card-body">
+                <h5 class="card-title">{{ submenu.submenu_name }}</h5>
+                <h6>Part of menu: {{ menus.menus_name  }}</h5>
+                <p class="card-text">{{ submenu.submenu_description }}</p>
+                <a href="{{ url_for('edit_submenus', submenus_id=submenu.id) }}"
+                    class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-success btn-sm">Edit
+                    <i class="fas fa-2x fa-edit right ps-3"></i></a>
+                <a href="{{ url_for('delete_submenus', submenus_id=submenu.id) }}"
+                    class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-danger btn-sm">Delete
+                    <i class="fas fa-2x fa-minus-square right ps-2"></i></a>
+                <a href="{{ url_for('view_items', menus_id=menus_id) }}"
+                    class="btn text-bg-primary btn-sm my-3 d-inline-flex align-items-center justify-content-center gap-2 col-8 mx-auto">View
+                    Items <i class="fas fa-2x right ps-3 fa-eye"></i></a>
+
             </div>
         </div>
-
-        {% endfor %}
-
     </div>
-    
-    {% endblock %}
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
 
 </div>

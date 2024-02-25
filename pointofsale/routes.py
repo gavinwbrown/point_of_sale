@@ -49,9 +49,9 @@ def delete_menus(menus_id):
     return render_template("delete_menus.html", menus=menus)
 
 
-@app.route("/add_submenus", methods=["GET", "POST"])
-def add_submenus():
-    menus = list(Menus.query.order_by(Menus.menus_name).all())
+@app.route("/add_submenus/<int:menus_id>", methods=["GET", "POST"])
+def add_submenus(menus_id):
+    submenus = Submenus.query.get_or_404(menus_id)
     if request.method == "POST":
         submenus = Submenus(
             submenu_name=request.form.get("submenus_name"),
@@ -60,13 +60,14 @@ def add_submenus():
         )
         db.session.add(submenus)
         db.session.commit()
-    return render_template("add_submenus.html", menus=menus)
+    return render_template("add_submenus.html", menus_id=menus_id, submenus=submenus)
 
 
 @app.route("/view_submenus/<int:menus_id>")
 def view_submenus(menus_id):
     submenus = list(Submenus.query.filter_by(menus_id=menus_id).all())
-    return render_template("view_submenus.html", submenus=submenus, menus_id=menus_id)
+    menus = Menus.query.get_or_404(menus_id)
+    return render_template("view_submenus.html", menus=menus, submenus=submenus, menus_id=menus_id)
 
 
 @app.route("/edit_submenus/<int:submenus_id>", methods=["GET", "POST"])
@@ -91,15 +92,17 @@ def delete_submenus(submenus_id):
     return render_template("delete_submenus.html", submenus=submenus)
 
 
-@app.route("/view_items/<int:submenus_id>", methods=["GET", "POST"])
-def view_items(submenus_id):
-    items=list(Items.query.filter_by(submenus_id=submenus_id).all())
-    return render_template("view_items.html", items=items, submenus_id=submenus_id)
+@app.route("/view_items/<int:menus_id>", methods=["GET", "POST"])
+def view_items( menus_id):
+    submenus = Submenus.query.get_or_404(menus_id)
+    items=list(Items.query.filter_by(submenus_id=menus_id).all())
+    return render_template("view_items.html", items=items, menus_id=menus_id, submenus=submenus)
 
 
-@app.route("/add_items/<int:submenus_id>", methods=["GET", "POST"])
-def add_items(submenus_id):
+@app.route("/add_items/<int:menus_id>/<int:submenus_id>", methods=["GET", "POST"])
+def add_items(submenus_id, menus_id):
     items=list(Items.query.order_by(Items.submenus_id).all())
+    submenus=Submenus.query.get_or_404(submenus_id)
     if request.method == "POST":
         items=Items(
             items_name=request.form.get("items_name"),
@@ -109,7 +112,7 @@ def add_items(submenus_id):
         )
         db.session.add(items)
         db.session.commit()
-    return render_template("add_items.html", items=items , submenus_id=submenus_id)
+    return render_template("add_items.html", items=items , submenus_id=submenus_id, menus_id=menus_id, submenus=submenus)
 
 
 @app.route("/order")

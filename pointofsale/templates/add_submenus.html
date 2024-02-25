@@ -8,18 +8,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Add A New Sub-Menu</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_submenus') }}" method="POST">
+                    <form class="row" action="{{ url_for('add_submenus', menus_id=menus_id, submenus_id=submenus_id) }}" method="POST">
                         <div class="col-12 py-3">
-                            <select class="form-select" name="menus_id" required aria-label="Default select example">
-                                <option selected>Choose A Menu</option>
-
-                                {% for menu in menus %}
-
-                                <option value="{{ menu.id }}">{{ menu.menus_name }}</option>
-                                
-                                {% endfor %}
-                                
-                            </select>
+                            <input type="text" class="form-control" id="submenus_id" name="submenus_id" minlength="3"
+                            maxlength="25" required aria-describedby="submenu_name"
+                            placeholder="{{ submenus.submenu_name }}" value="{{ submenus.submenu_name }}" disabled>
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="submenus_name" name="submenus_name" minlength="3"
@@ -32,7 +25,7 @@
                                 placeholder="Sub-Menu Description (3-29 characters)">
                         </div>
                         <div class="col-12 py-3">
-                            <a href="{{ url_for('main_menu') }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Menus <i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                            <a href="{{ url_for('view_submenus', menus_id=menus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel <i class="fas fa-2x fa-window-close right ps-3"></i></a>
                             <button type="submit"
                                 class="d-inline-flex btn align-items-center justify-content-center text-bg-success btn-lg">Add
                                 Sub-Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></button>

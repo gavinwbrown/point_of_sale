@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Add A New Item</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_items', submenus_id=submenus_id) }}" method="POST">
+                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, submenus_id=submenus_id) }}" method="POST">
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="submenus_id" name="submenus_id" minlength="3"
                                 maxlength="25" required aria-describedby="submenu_name"
-                                placeholder="{{ submenus_id }}" value="{{ submenus_id }}" disabled>
+                                placeholder="{{ submenus.submenu_name }}" disabled>
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_name" name="items_name" minlength="3"
@@ -30,7 +30,7 @@
                                 placeholder="Item Price (enter if format 00.00)">
                         </div>
                         <div class="col-12 py-3">
-                            <a href="{{ url_for('view_items', submenus_id=submenus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Items <i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                            <a href="{{ url_for('view_items', menus_id=menus_id, submenus_id=submenus_id ) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Back To Items <i class="fas fa-2x fa-window-close right ps-3"></i></a>
                             <button type="submit"
                                 class="d-inline-flex btn align-items-center justify-content-center text-bg-success btn-lg">Add
                                 Item <i class="fas fa-2x fa-plus-square right ps-3"></i></button>
