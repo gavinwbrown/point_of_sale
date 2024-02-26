@@ -119,6 +119,7 @@ def add_items(menus_id):
 @app.route("/edit_items/<int:submenus_id>", methods=["GET", "POST"])
 def edit_items(submenus_id):
     items = Items.query.get_or_404(submenus_id)
+    submenus_name=Submenus.query.get_or_404(items.submenus_id)
     if request.method == "POST":
         items.items_name=request.form.get("items_name"),
         items.items_description=request.form.get("items_description"),
@@ -126,7 +127,7 @@ def edit_items(submenus_id):
         db.session.add(items)
         db.session.commit()
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
-    return render_template("edit_items.html", submenus_id=submenus_id, items=items)
+    return render_template("edit_items.html", submenus_id=submenus_id, items=items, submenus_name=submenus_name)
 
 
 @app.route("/delete_items/<int:submenus_id>", methods=["GET", "POST"])
