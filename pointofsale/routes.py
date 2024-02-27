@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
-from pointofsale.models import Menus, Submenus, Items
+from pointofsale.models import Menus, Submenus, Items, Currentorder
 
 
 @app.route("/")
@@ -140,9 +140,34 @@ def delete_items(submenus_id):
     return render_template("delete_items.html", submenus_id=submenus_id, items=items)
 
 
-@app.route("/order")
-def order():
-    return render_template("order.html")
+@app.route("/current_order")
+def current_order():
+    current_order = list(Currentorder.query.order_by(Currentorder.id).all())
+    return render_template("current_order.html", current_order=current_order)
+
+@app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
+def addto_order(item_id, item_name, item_price, submenus_id):
+    submenus=Submenus.query.get_or_404(submenus_id)
+    items=list(Items.query.filter_by(submenus_id=submenus_id).all())
+    current_order=Currentorder(
+        currentorder_name=item_name,
+        currentorder_price=item_price,
+        item_id=item_id
+    )
+    db.session.add(current_order)
+    db.session.commit()
+    return render_template("view_items.html", menus_id=item_id, submenus_id=submenus_id, submenus=submenus, items=items)
+
+
+@app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
+def remove_item(item_id):
+    delete_item=Currentorder.query.get_or_404(item_id)
+    item_name=delete_item.currentorder_name
+    if request.method == "POST":
+        db.session.delete(delete_item)
+        db.session.commit()
+        return redirect(url_for("current_order"))
+    return render_template("remove_item.html", delete_item=delete_item, item_id=item_id, item_name=item_name)
 
 
 @app.route("/sales")
