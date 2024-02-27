@@ -147,6 +147,7 @@ def current_order():
     total_price=0
     for price in current_order:
         total_price+=price.currentorder_price
+    total_price=round(total_price, 2)
     return render_template("current_order.html", current_order=current_order, total_price=total_price)
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
