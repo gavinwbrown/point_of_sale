@@ -143,7 +143,11 @@ def delete_items(submenus_id):
 @app.route("/current_order")
 def current_order():
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
-    return render_template("current_order.html", current_order=current_order)
+    global total_price
+    total_price=0
+    for price in current_order:
+        total_price+=price.currentorder_price
+    return render_template("current_order.html", current_order=current_order, total_price=total_price)
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
 def addto_order(item_id, item_name, item_price, submenus_id):
