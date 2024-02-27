@@ -25,7 +25,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         {% block header %} {% endblock %}
-        
+
       </div>
     </div>
   </nav>
@@ -34,7 +34,9 @@
     <footer class="footer-style bg-body-tertiary fixed-bottom p-3" data-bs-theme="dark">
       <div class="row">
         <div class="text-start col-6 text-white">Expresso &copy; 2024 4uxdesign</div>
-        <div class="text-end col-6 text-white">Price to Pay: 00:00</div>
+
+        {% block footer%}{% endblock %}
+        
       </div>
     </footer>
   </div>

@@ -45,12 +45,15 @@
 
             {% endfor %}
 
-            <div class="col-6 text-end">
-                <h3>{{ total_price }} {{ '%0.2f'|format(total_price) }}</h3>
-            </div>
-
         </div>
-
     </div>
 
     {% endblock %}
+
+    {% block footer%}
+
+    <div class="text-end col-6 text-white"><a href="" class="d-inline-flex align-items-center justify-content-center btn btn-sm text-bg-success fs-2 me-3">Paid<i class="fas fa-plus-square right ps-3"></i></a>Price: £{{ '%0.2f'|format(total_price) }}</div>
+             
+    {% endblock %}
+
+    
