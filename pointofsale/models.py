@@ -70,3 +70,19 @@ class Currentorder(db.Model):
 
         return self.currentorder_name
     
+
+class Transactions(db.Model):
+
+    # schema for the Transactions model
+
+    id = db.Column(db.Integer, primary_key=True)
+    transactions_name = db.Column(db.String(25), nullable=False)
+    transactions_price = db.Column(db.Float, nullable=False)
+    
+
+    def __repr__(self):
+
+        # __repr__ to represent itself in the form of a string
+
+        return self.transactions_name
+    

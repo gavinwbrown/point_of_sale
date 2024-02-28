@@ -142,17 +142,27 @@ def delete_items(submenus_id):
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
     return render_template("delete_items.html", submenus_id=submenus_id, items=items)
 
-# global variable to store the total price of the current order. ** CHANGE TO A NON GLOBAL VARIABLE **
 
 @app.route("/current_order")
+
+# returns the current order and it's total price
+
 def current_order():
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
-    global total_price
+    total_price=total(current_order)
+    return render_template("current_order.html", current_order=current_order, total_price=total_price)
+
+
+def total(current_order):
+
+    # function to return the total price of the current order
+
     total_price=0
     for price in current_order:
         total_price+=price.currentorder_price
     total_price=round(total_price, 2)
-    return render_template("current_order.html", current_order=current_order, total_price=total_price)
+    return total_price
+
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
 def addto_order(item_id, item_name, item_price, submenus_id):
