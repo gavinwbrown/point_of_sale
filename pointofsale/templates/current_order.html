@@ -62,8 +62,7 @@
 
 <!-- shows total price of order in footer and offers a paid option -->
 
-<div class="text-end col-6 text-white"><a href=""
-        class="d-inline-flex align-items-center justify-content-center btn btn-sm text-bg-success fs-2 me-3">Paid<i
-            class="fas fa-plus-square right ps-3"></i></a>Price: £{{ '%0.2f'|format(total_price) }}</div>
+<div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a href=""
+        class="btn btn-sm text-bg-success fs-3 me-3">£{{ '%0.2f'|format(total_price) }}</a></div>
 
 {% endblock %}
