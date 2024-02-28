@@ -1,5 +1,28 @@
+<!-- confirmation screen for menu deletion -->
+
 {% extends "base.html" %}
+
+{% block header %}
+
+<!-- sets active navbar tab to menus -->
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link fs-2 active" aria-current="page" href="{{url_for('main_menu') }}">Menus</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('current_order') }}">Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('sales') }}">Sales</a>
+    </li>
+</ul>
+
+{% endblock %}
+
 {% block content %}
+
+<!-- delete the menu -->
 
 <div class="container ">
     <div class="row">

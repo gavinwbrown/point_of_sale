@@ -1,7 +1,10 @@
+# import mecessary modules
+
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
 from pointofsale.models import Menus, Submenus, Items, Currentorder
 
+# create routes for the application
 
 @app.route("/")
 def home():
@@ -139,6 +142,7 @@ def delete_items(submenus_id):
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
     return render_template("delete_items.html", submenus_id=submenus_id, items=items)
 
+# global variable to store the total price of the current order. ** CHANGE TO A NON GLOBAL VARIABLE **
 
 @app.route("/current_order")
 def current_order():

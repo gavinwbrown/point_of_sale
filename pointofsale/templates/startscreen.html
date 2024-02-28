@@ -1,6 +1,10 @@
+<!-- the initial screen shown when app starts and available by clicking the coffee cup in the navbar -->
+
 {% extends "base.html" %}
 
 {% block header %}
+
+<!-- removes active setting from navbar -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -17,6 +21,8 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- displays purpose of app and how to use it -->
 
 <div class="container ">
     <div class="row">
@@ -48,5 +54,7 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        {% endblock %}
+{% endblock %}

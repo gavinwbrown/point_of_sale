@@ -1,8 +1,11 @@
+# import the database object
+
 from pointofsale import db
 
-
 class Menus(db.Model):
-    # schema for the Menu model
+
+    # schema for the Menus model 
+
     id = db.Column(db.Integer, primary_key=True)
     menus_name = db.Column(db.String(25), nullable=False)
     menus_description = db.Column(db.String(29), nullable=False)
@@ -10,45 +13,60 @@ class Menus(db.Model):
     
 
     def __repr__(self):
+
         # __repr__ to represent itself in the form of a string
+
         return self.menus_name
 
 
 class Submenus(db.Model):
-    # schema for the Submenu model
+
+    # schema for the Submenus model
+
     id = db.Column(db.Integer, primary_key=True)
     submenu_name = db.Column(db.String(25), nullable=False)
     submenu_description = db.Column(db.String(29), nullable=False)
     items = db.relationship("Items", backref="submenus", cascade="all, delete", lazy=True)
     menus_id = db.Column(db.Integer, db.ForeignKey("menus.id"), nullable=False)
     
-   
+
     def __repr__(self):
+
         # __repr__ to represent itself in the form of a string
+
         return self.submenu_name
     
 
 class Items(db.Model):
+
     # schema for the Items model
+
     id = db.Column(db.Integer, primary_key=True)
     items_name = db.Column(db.String(25), nullable=False)
     items_description = db.Column(db.String(29), nullable=False)
     items_price = db.Column(db.Float, nullable=False)
     submenus_id = db.Column(db.Integer, db.ForeignKey("submenus.id"), nullable=False)
 
+
     def __repr__(self):
+
         # __repr__ to represent itself in the form of a string
+
         return self.items_name
     
 
 class Currentorder(db.Model):
-    # schema for the Order model
+
+    # schema for the Currentorder model
+
     id = db.Column(db.Integer, primary_key=True)
     currentorder_name = db.Column(db.String(25), nullable=False)
     currentorder_price = db.Column(db.Float, nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey("items.id"), nullable=False)
 
     def __repr__(self):
+
         # __repr__ to represent itself in the form of a string
+
         return self.currentorder_name
     

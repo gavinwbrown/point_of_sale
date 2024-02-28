@@ -1,6 +1,10 @@
+<!-- display the current order -->
+
 {% extends "base.html" %}
 
 {% block header %}
+
+<!-- sets active navbar tab to order -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -17,6 +21,8 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- list the items as bootstrap cards for the current order and offer a remove option -->
 
 <div class="container">
 
@@ -53,6 +59,8 @@
 {% endblock %}
 
 {% block footer%}
+
+<!-- shows total price of order in footer and offers a paid option -->
 
 <div class="text-end col-6 text-white"><a href=""
         class="d-inline-flex align-items-center justify-content-center btn btn-sm text-bg-success fs-2 me-3">Paid<i
