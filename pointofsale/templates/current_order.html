@@ -47,13 +47,15 @@
 
         </div>
     </div>
+</div>
+<div style="height:8em"></div>
 
-    {% endblock %}
+{% endblock %}
 
-    {% block footer%}
+{% block footer%}
 
-    <div class="text-end col-6 text-white"><a href="" class="d-inline-flex align-items-center justify-content-center btn btn-sm text-bg-success fs-2 me-3">Paid<i class="fas fa-plus-square right ps-3"></i></a>Price: £{{ '%0.2f'|format(total_price) }}</div>
-             
-    {% endblock %}
+<div class="text-end col-6 text-white"><a href=""
+        class="d-inline-flex align-items-center justify-content-center btn btn-sm text-bg-success fs-2 me-3">Paid<i
+            class="fas fa-plus-square right ps-3"></i></a>Price: £{{ '%0.2f'|format(total_price) }}</div>
 
-    
+{% endblock %}
