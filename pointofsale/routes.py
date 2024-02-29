@@ -2,7 +2,7 @@
 
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
-from pointofsale.models import Menus, Submenus, Items, Currentorder
+from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
 
 # creates routes for the application
 
@@ -193,6 +193,31 @@ def remove_item(item_id):
         db.session.commit()
         return redirect(url_for("current_order"))
     return render_template("remove_item.html", delete_item=delete_item, item_id=item_id, item_name=item_name)
+
+
+@app.route("/transaction/<total_price>")
+def transaction(total_price):
+        add_transactions(total_price)
+        return render_template("current_order.html", total_price=0)
+
+def add_transactions(total_price):
+    current_order = list(Currentorder.query.order_by(Currentorder.id).all())
+    for item in current_order:
+        add_transaction=Transactions(
+            transactions_name=item.currentorder_name,
+            transactions_price=item.currentorder_price
+        )
+        db.session.add(add_transaction)
+        delete_item=Currentorder.query.get_or_404(item.id)
+        db.session.delete(delete_item)
+    add_total=Transactions(
+        transactions_name="total",
+        transactions_price=total_price
+    )
+    db.session.add(add_total) 
+    db.session.commit()
+    return
+   
 
 
 @app.route("/sales")

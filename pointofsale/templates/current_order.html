@@ -62,7 +62,7 @@
 
 <!-- shows total price of order in footer and offers a paid option -->
 
-<div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a href=""
+<div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a href="{{ url_for('transaction', total_price=total_price, current_order=current_order) }}"
         class="btn btn-sm text-bg-success fs-3 me-3">£{{ '%0.2f'|format(total_price) }}</a></div>
 
 {% endblock %}
