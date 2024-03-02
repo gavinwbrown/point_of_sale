@@ -27,11 +27,21 @@
 <div class="container ">
     <div class="row">
         <div class="col-12 text-center py-4">
+
+            {% if new_item == 'True' %}
+
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>New Item Added</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            {% endif %}
+
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
                     <h5 class="card-title">Add A New Item</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id) }}" method="POST">
+                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item='True') }}" method="POST">
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="submenus_id" name="submenus_id" minlength="3"
                                 maxlength="25" required aria-describedby="submenu_name"

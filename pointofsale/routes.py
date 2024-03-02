@@ -17,8 +17,8 @@ def main_menu():
     return render_template("main_menu.html", menus=menus)
 
 
-@app.route("/add_menus", methods=["GET", "POST"])
-def add_menus():
+@app.route("/add_menus/<new_menu>", methods=["GET", "POST"])
+def add_menus(new_menu):
     if request.method == "POST":
         menus=Menus(
             menus_name=request.form.get("menus_name"),
@@ -26,8 +26,11 @@ def add_menus():
         )
         db.session.add(menus)
         db.session.commit()
-        return redirect(url_for("main_menu"))
-    return render_template("add_menus.html")
+
+        # boolean true didn't work in jinja 2 if statemment/add menus so I used a string
+
+        return redirect(url_for("add_menus", new_menu='True'))
+    return render_template("add_menus.html", new_menu=new_menu)
 
 
 @app.route("/edit_menus/<int:menus_id>", methods=["GET", "POST"])
@@ -52,8 +55,8 @@ def delete_menus(menus_id):
     return render_template("delete_menus.html", menus=menus)
 
 
-@app.route("/add_submenus/<int:submenus_id>", methods=["GET", "POST"])
-def add_submenus(submenus_id):
+@app.route("/add_submenus/<int:submenus_id>/<new_submenu>", methods=["GET", "POST"])
+def add_submenus(submenus_id, new_submenu):
     submenus=list(Submenus.query.filter_by(menus_id=submenus_id).all())
     menus=Menus.query.get_or_404(submenus_id)
     if request.method == "POST":
@@ -64,7 +67,8 @@ def add_submenus(submenus_id):
         )
         db.session.add(submenus)
         db.session.commit()
-    return render_template("add_submenus.html", menus=menus, submenus=submenus, submenus_id=submenus_id)
+        return redirect(url_for("add_submenus", submenus_id=submenus_id, new_submenu='True'))
+    return render_template("add_submenus.html", menus=menus, submenus=submenus, submenus_id=submenus_id, new_submenu=new_submenu)
 
 
 @app.route("/view_submenus/<int:submenus_id>")
@@ -103,8 +107,8 @@ def view_items( menus_id):
     return render_template("view_items.html", items=items, submenus=submenus, menus_id=menus_id)
 
 
-@app.route("/add_items/<int:menus_id>", methods=["GET", "POST"])
-def add_items(menus_id):
+@app.route("/add_items/<int:menus_id>/<new_item>", methods=["GET", "POST"])
+def add_items(menus_id, new_item):
     items=list(Items.query.order_by(Items.submenus_id).all())
     submenus=Submenus.query.get_or_404(menus_id)
     if request.method == "POST":
@@ -117,7 +121,8 @@ def add_items(menus_id):
         )
         db.session.add(items)
         db.session.commit()
-    return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus)
+        return redirect(url_for("add_items", items=items, menus_id=menus_id, submenus=submenus, new_item='True'))
+    return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus, new_item=new_item)
 
 
 @app.route("/edit_items/<int:submenus_id>", methods=["GET", "POST"])
