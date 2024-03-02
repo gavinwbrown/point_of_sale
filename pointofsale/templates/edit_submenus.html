@@ -37,13 +37,13 @@
                                 <label for="submenus_name">Sub-Menus Name</label>
                                 <input type="text" class="form-control" id="submenus_name" name="submenus_name" minlength="3"
                                     maxlength="25" required aria-describedby="sub_menu_name"
-                                    value="{{ submenus.submenu_name }}">
+                                    value="{{ submenus.submenus_name }}">
                             </div>
                             <div class="col-12 py-3 text-start">
                                 <label for="submenus_description">Sub-Menus Description</label>
                                 <input type="text" class="form-control" id="submenus_description" name="submenus_description"
                                     minlength="3" maxlength="29" required aria-describedby="menu_description"
-                                    value="{{ submenus.submenu_description }}">
+                                    value="{{ submenus.submenus_description }}">
                             </div>
                             <div class="col-12 py-3">
                                 <a href="{{ url_for('view_submenus', submenus_id=submenus.menus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary">Cancel<i class="fas fa-2x fa-window-close right ps-3"></i></a>

@@ -34,10 +34,8 @@ def add_menus():
 def edit_menus(menus_id):
     menus=Menus.query.get_or_404(menus_id)
     if request.method == "POST":
-        menus=Menus(
-        menus_name=request.form.get("menus_name"),
-        menus_description=request.form.get("menus_description")
-    )
+        menus.menus_name=request.form.get("menus_name"),
+        menus.menus_description=request.form.get("menus_description")
         db.session.add(menus)
         db.session.commit()
         return redirect(url_for("main_menu"))
@@ -60,8 +58,8 @@ def add_submenus(submenus_id):
     menus=Menus.query.get_or_404(submenus_id)
     if request.method == "POST":
         submenus=Submenus(
-            submenu_name=request.form.get("submenus_name"),
-            submenu_description=request.form.get("submenus_description"),
+            submenus_name=request.form.get("submenus_name"),
+            submenus_description=request.form.get("submenus_description"),
             menus_id=submenus_id
         )
         db.session.add(submenus)
@@ -80,10 +78,8 @@ def view_submenus(submenus_id):
 def edit_submenus(submenus_id):
     submenus=Submenus.query.get_or_404(submenus_id)
     if request.method == "POST":
-        submenus=Submenus(
-            submenu_name=request.form.get("submenus_name"),
-            submenu_description=request.form.get("submenus_description")
-        )
+        submenus.submenus_name=request.form.get("submenus_name"),
+        submenus.submenus_description=request.form.get("submenus_description")
         db.session.add(submenus)
         db.session.commit()
         return redirect(url_for("view_submenus", submenus_id=submenus.menus_id))
@@ -112,12 +108,11 @@ def add_items(menus_id):
     items=list(Items.query.order_by(Items.submenus_id).all())
     submenus=Submenus.query.get_or_404(menus_id)
     if request.method == "POST":
-        items=Items(
-            items_name=request.form.get("items_name"),
-            items_description=request.form.get("items_description"),
-            items_price=request.form.get("items_price"),
-            submenus_id=menus_id
-        )
+        items.items_name=request.form.get("items_name"),
+        items.items_description=request.form.get("items_description"),
+        items.items_price=request.form.get("items_price"),
+        items.items_costprice=request.form.get("items_costprice"),
+        items.submenus_id=menus_id
         db.session.add(items)
         db.session.commit()
     return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus)
@@ -128,11 +123,10 @@ def edit_items(submenus_id):
     items=Items.query.get_or_404(submenus_id)
     submenus_name=Submenus.query.get_or_404(items.submenus_id)
     if request.method == "POST":
-        items=Items(
-        items_name=request.form.get("items_name"),
-        items_description=request.form.get("items_description"),
-        items_price=request.form.get("items_price"),
-        )
+        items.items_name=request.form.get("items_name"),
+        items.items_description=request.form.get("items_description"),
+        items.items_price=request.form.get("items_price"),
+        items.items_costprice=request.form.get("items_costprice")
         db.session.add(items)
         db.session.commit()
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
@@ -171,7 +165,7 @@ def total(current_order):
 
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
-def addto_order(item_id, item_name, item_price, submenus_id):
+def addto_order(item_id, submenus_id, item_name, item_price):
     submenus=Submenus.query.get_or_404(submenus_id)
     items=list(Items.query.filter_by(submenus_id=submenus_id).all())
     current_order=Currentorder(
