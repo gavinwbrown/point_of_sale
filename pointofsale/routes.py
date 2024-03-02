@@ -151,8 +151,8 @@ def delete_items(submenus_id):
 
 def current_order():
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
-    total_price=total(current_order)
-    return render_template("current_order.html", current_order=current_order, total_price=total_price)
+    total_price, total_costprice=total(current_order)
+    return render_template("current_order.html", current_order=current_order, total_price=total_price, total_costprice=total_costprice)
 
 
 def total(current_order):
@@ -160,19 +160,23 @@ def total(current_order):
     # function to return the total price of the current order
 
     total_price=0
+    total_costprice=0
     for price in current_order:
         total_price+=price.currentorder_price
+        total_costprice+=price.currentorder_costprice
     total_price=round(total_price, 2)
-    return total_price
+    total_costprice=round(total_costprice, 2)
+    return total_price, total_costprice
 
 
-@app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>", methods=["GET", "POST"])
-def addto_order(item_id, submenus_id, item_name, item_price):
+@app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>/<item_costprice>", methods=["GET", "POST"])
+def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
     submenus=Submenus.query.get_or_404(submenus_id)
     items=list(Items.query.filter_by(submenus_id=submenus_id).all())
     current_order=Currentorder(
         currentorder_name=item_name,
         currentorder_price=item_price,
+        currentorder_costprice=item_costprice,
         item_id=item_id
     )
     db.session.add(current_order)
@@ -191,26 +195,28 @@ def remove_item(item_id):
     return render_template("remove_item.html", delete_item=delete_item, item_id=item_id, item_name=item_name)
 
 
-@app.route("/transaction/<total_price>")
-def transaction(total_price):
-        add_transactions(total_price)
+@app.route("/transaction/<total_price>/<total_costprice>")
+def transaction(total_price, total_costprice):
+        add_transactions(total_price, total_costprice)
         return render_template("current_order.html", total_price=0)
 
-def add_transactions(total_price):
+def add_transactions(total_price, total_costprice):
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
     for item in current_order:
         add_transaction=Transactions(
             transactions_name=item.currentorder_name,
-            transactions_price=item.currentorder_price
+            transactions_price=item.currentorder_price,
+            transactions_costprice=item.currentorder_costprice
         )
         db.session.add(add_transaction)
         delete_item=Currentorder.query.get_or_404(item.id)
         db.session.delete(delete_item)
     add_total=Transactions(
         transactions_name="total",
-        transactions_price=total_price
+        transactions_price=total_price,
+        transactions_costprice=total_costprice
     )
-    db.session.add(add_total) 
+    db.session.add(add_total)
     db.session.commit()
     return
    

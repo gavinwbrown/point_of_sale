@@ -57,7 +57,7 @@
                     <a href="{{ url_for('delete_items', submenus_id=item.id) }}"
                     class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-danger btn-sm">Delete
                     <i class="fas fa-2x fa-minus-square right ps-2"></i></a>
-                    <a href="{{ url_for('addto_order', item_id=item.id, submenus_id=submenus.id, item_name=item.items_name, item_price=item.items_price) }}"
+                    <a href="{{ url_for('addto_order', item_id=item.id, submenus_id=submenus.id, item_name=item.items_name, item_price=item.items_price, item_costprice=item.items_costprice) }}"
                         class="btn text-bg-primary btn-sm my-3 d-inline-flex align-items-center justify-content-center gap-2 col-8 mx-auto">Add
                         to Order <i class="fas fa-2x right ps-3 fa-eye"></i></a>
                 </div>

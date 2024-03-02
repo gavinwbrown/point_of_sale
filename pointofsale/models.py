@@ -63,6 +63,7 @@ class Currentorder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     currentorder_name = db.Column(db.String(25), nullable=False)
     currentorder_price = db.Column(db.Float, nullable=False)
+    currentorder_costprice = db.Column(db.Float, nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey("items.id"), nullable=False)
 
     def __repr__(self):
@@ -79,6 +80,7 @@ class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     transactions_name = db.Column(db.String(25), nullable=False)
     transactions_price = db.Column(db.Float, nullable=False)
+    transactions_costprice = db.Column(db.Float, nullable=False)
     
 
     def __repr__(self):
