@@ -229,7 +229,8 @@ def add_transactions(total_price, total_costprice):
 
 @app.route("/sales")
 def sales():
-    return render_template("sales.html")
+    transactions = list(Transactions.query.order_by(Transactions.id).all())
+    return render_template("sales.html", transactions=transactions)
 
 
 @app.route("/startscreen")
