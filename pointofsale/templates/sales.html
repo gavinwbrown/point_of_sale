@@ -28,8 +28,8 @@
     <div class="row">
 
         <!-- uses length of string as counter for number of items 
-                due to scoping ie. cannot access a variable in a loop
-                that has been set outside of the loop -->
+            due to scoping ie. cannot access a variable in a loop
+            that has been set outside of the loop -->
 
         {% set order_number=[] %}
 
@@ -46,12 +46,12 @@
                         <h5 class="card-text"><i class="fas fa-arrow-up"></i><strong> ORDER {{ order_number|length
                                 }}</strong></h5>
                     </div>
-                    <div class="col-4 d-flex justify-content-center">
-                        <h5 class="card-text"><strong>TOTAL: {{ '%0.2f'|format(transaction.transactions_price)
+                    <div class="col-4 d-flex justify-content-end">
+                        <h5 class="card-text"><strong>TOTAL:£ {{ '%0.2f'|format(transaction.transactions_price)
                                 }}</strong></h5>
                     </div>
-                    <div class="col-4 d-flex justify-content-center">
-                        <h5 class="card-text"><strong>COST: {{ '%0.2f'|format(transaction.transactions_costprice)
+                    <div class="col-4 d-flex justify-content-end">
+                        <h5 class="card-text"><strong>COST:£ {{ '%0.2f'|format(transaction.transactions_costprice)
                                 }}</strong></h5>
                     </div>
                 </div>
@@ -66,10 +66,10 @@
                         <div class="col-4 d-flex justify-content-center">
                             <h5 class="card-title">{{ transaction.transactions_name }}</h5>
                         </div>
-                        <div class="col-4 d-flex justify-content-center">
+                        <div class="col-4 d-flex justify-content-end">
                             <h5 class="card-text">{{ '%0.2f'|format(transaction.transactions_price) }}</h5>
                         </div>
-                        <div class="col-4 d-flex justify-content-center">
+                        <div class="col-4 d-flex justify-content-end">
                             <h5 class="card-text">{{ '%0.2f'|format(transaction.transactions_costprice) }}</h5>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
 
                             <!-- shows total price of order in footer and offers a paid option -->
 
-                            <a href="" class="btn btn-sm text-bg-primary fs-3 me-3">CSV File</a>
+                            <a href="{{url_for('export_sales') }}" class="btn btn-sm text-bg-primary fs-3 me-3">CSV File</a>
                         </div>
                     </div>
                 </div>

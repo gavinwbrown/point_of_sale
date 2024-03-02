@@ -3,6 +3,7 @@
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
 from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
+import csv
 
 # creates routes for the application
 
@@ -229,6 +230,23 @@ def add_transactions(total_price, total_costprice):
 
 @app.route("/sales")
 def sales():
+    transactions = list(Transactions.query.order_by(Transactions.id).all())
+    return render_template("sales.html", transactions=transactions)
+
+
+@app.route("/export_sales")
+def export_sales():
+    transactions = list(Transactions.query.order_by(Transactions.id).all())
+    with open("sales.csv", "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Item Name", "Price", "Cost Price"])
+        for transaction in transactions:
+            writer.writerow([transaction.transactions_name, transaction.transactions_price, transaction.transactions_costprice])
+    days_sales=list(Transactions.query.order_by(Transactions.id).all())
+    for sale in days_sales:
+        delete_item=Transactions.query.get_or_404(sale.id)
+        db.session.delete(delete_item)
+    db.session.commit()
     transactions = list(Transactions.query.order_by(Transactions.id).all())
     return render_template("sales.html", transactions=transactions)
 
