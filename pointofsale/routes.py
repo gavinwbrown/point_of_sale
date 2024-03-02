@@ -108,11 +108,13 @@ def add_items(menus_id):
     items=list(Items.query.order_by(Items.submenus_id).all())
     submenus=Submenus.query.get_or_404(menus_id)
     if request.method == "POST":
-        items.items_name=request.form.get("items_name"),
-        items.items_description=request.form.get("items_description"),
-        items.items_price=request.form.get("items_price"),
-        items.items_costprice=request.form.get("items_costprice"),
-        items.submenus_id=menus_id
+        items=Items(
+        items_name=request.form.get("items_name"),
+        items_description=request.form.get("items_description"),
+        items_price=request.form.get("items_price"),
+        items_costprice=request.form.get("items_costprice"),
+        submenus_id=menus_id
+        )
         db.session.add(items)
         db.session.commit()
     return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus)
