@@ -247,9 +247,11 @@ def sales():
     return render_template("sales.html", transactions=transactions)
 
 
-@app.route("/export_sales", methods=["GET", "POST"])
-def export_sales():
+@app.route("/email_sales/<send_address>", methods=["GET", "POST"])
+def email_sales(send_address):
+    
     if request.method == "POST":
+        send_address=request.form.get("email_address")
         transactions = list(Transactions.query.order_by(Transactions.id).all())
         with open("sales_data.csv", "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
@@ -261,7 +263,7 @@ def export_sales():
             delete_item=Transactions.query.get_or_404(sale.id)
             db.session.delete(delete_item)
         db.session.commit()
-        transactions=list(Transactions.query.order_by(Transactions.id).all())
+        # transactions=list(Transactions.query.order_by(Transactions.id).all())
 
         # send email with sales data
 
@@ -270,18 +272,18 @@ def export_sales():
         # Create the body of the message (a plain-text and an HTML version).
 
         emailfrom = "gavin.brown@4uxdesign.com"
-        emailto = "gavin.brown@4uxdesign.com"
-        fileToSend = "sales_data.csv"
+        
+        filetosend = "sales_data.csv"
         username = "gavin.brown@4uxdesign.com"
         password = os.environ.get("EMAIL")
 
         msg = MIMEMultipart()
         msg["From"] = emailfrom
-        msg["To"] = emailto
+        msg["To"] = send_address
         msg["Subject"] = "sales data .csv for " + now
         msg.preamble = ""
 
-        ctype, encoding = mimetypes.guess_type(fileToSend)
+        ctype, encoding = mimetypes.guess_type(filetosend)
         if ctype is None or encoding is not None:
             ctype = "application/octet-stream"
 
@@ -295,21 +297,19 @@ def export_sales():
         attachment.set_payload(fp.read())
         fp.close()
         encoders.encode_base64(attachment)
-        attachment.add_header("Content-Disposition", "attachment", filename=fileToSend)
+        attachment.add_header("Content-Disposition", "attachment", filename=filetosend)
         msg.attach(attachment)
-        
 
         # Send the message via SMTP server.
-
         
         server = smtplib.SMTP("smtp.gmail.com:587")
         server.starttls()
         server.login(username,password)
-        server.sendmail(emailfrom, emailto, msg.as_string())
+        server.sendmail(emailfrom, send_address, msg.as_string())
         server.quit()
 
         return redirect(url_for("main_menu"))
-    return render_template("email_sales.html")
+    return render_template("email_sales.html", send_address=send_address)
 
 
 @app.route("/startscreen")
@@ -317,15 +317,3 @@ def startscreen():
     return render_template("startscreen.html")
 
 
-conf={
-        'from': 'gavin.brown@4uxdesign.com',
-        'to': 'gavin.brown@4uxdesign.com',
-        'server': 'smtp.gmail.com',
-        'port': '587',
-        'tls': 'yes',
-        'login': 'gavin.brown@4uxdesign.com'
-        }
-
-report={
-        'filename': 'sales_data.csv'
-        }

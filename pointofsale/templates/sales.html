@@ -84,16 +84,13 @@
         <div class="col-12 text-start py-1">
             <div class="card border-dark bg-danger-subtle">
                 <div class="card-body d-inline-flex">
-                    <div class="col-12 d-flex justify-content-between">
-                        <div class="col-8 d-flex justify-content-center">
-                            <h5 class="card-text">Tap/Click the CSV button to download the days sales. WARNING: This
-                                will reset the sales in the app.</h5>
+                    <div class="col-12 justify-content-between">
+                        <div class="col-12">
+                            <h5 class="card-text">Tap/Click the CSV button to email the days sales.</h5>
+                            <h5>WARNING: The sales data will be reset.</h5>
                         </div>
-                        <div class="d-flex text-end text-white align-items-center justify-content-end">
-
-                            <!-- shows total price of order in footer and offers a paid option -->
-
-                            <a href="{{url_for('export_sales') }}" class="btn btn-sm text-bg-primary fs-3 me-3">CSV File</a>
+                        <div class="col-12 d-flex justify-content-center">
+                            <a href="{{url_for('email_sales', send_address='gavin.brown@4uxdesign.com') }}" class="btn btn-sm text-bg-primary fs-3 me-3">CSV File</a>
                         </div>
                     </div>
                 </div>
