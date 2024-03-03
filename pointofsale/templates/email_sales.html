@@ -1,0 +1,54 @@
+<!-- displays the days sales and offers an export as .csv file option ** FLASK EXCEL TO BE USED FOR THIS ** -->
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<!-- sets active navbar tab to sales -->
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('main_menu') }}">Menus</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('current_order') }}">Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2 active" aria-current="page" href="{{url_for('sales') }}">Sales</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container ">
+    <div class="row py-3">
+        <div class="card border-dark bg-dark-subtle">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <p class="card-text">
+                <form class="row" action="{{ url_for('export_sales') }}" method="POST">
+                    <div class="col-9 py-3">
+                        <input type="email" class="form-control" id="email_address" name="email_address" required
+                            aria-describedby="email_address" placeholder="Please enter a valid email address">
+                    </div>
+                    <div class="col-3 py-3">
+                        <button type="submit"
+                            class="d-inline-flex btn align-items-center justify-content-center text-bg-success">
+                            Email Me</button>
+                    </div>
+                </form>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- prevent footer from partially covering sales cards -->
+
+    <div style="height:8em"></div>
+
+</div>
+
+{% endblock %}

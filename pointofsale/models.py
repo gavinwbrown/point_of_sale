@@ -2,6 +2,8 @@
 
 from pointofsale import db
 
+
+
 class Menus(db.Model):
 
     # schema for the Menus model 
@@ -88,4 +90,6 @@ class Transactions(db.Model):
         # __repr__ to represent itself in the form of a string
 
         return self.transactions_name
+
+
     

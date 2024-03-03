@@ -3,7 +3,20 @@
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
 from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
-import csv
+import csv, os, datetime
+
+# import necessary modules for email
+
+import smtplib
+import mimetypes
+from email.mime.multipart import MIMEMultipart
+from email import encoders
+from email.message import Message
+from email.mime.audio import MIMEAudio
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email.mime.text import MIMEText
+
 
 # creates routes for the application
 
@@ -234,23 +247,85 @@ def sales():
     return render_template("sales.html", transactions=transactions)
 
 
-@app.route("/export_sales")
+@app.route("/export_sales", methods=["GET", "POST"])
 def export_sales():
-    transactions = list(Transactions.query.order_by(Transactions.id).all())
-    with open("sales.csv", "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Item Name", "Price", "Cost Price"])
-        for transaction in transactions:
-            writer.writerow([transaction.transactions_name, transaction.transactions_price, transaction.transactions_costprice])
-    days_sales=list(Transactions.query.order_by(Transactions.id).all())
-    for sale in days_sales:
-        delete_item=Transactions.query.get_or_404(sale.id)
-        db.session.delete(delete_item)
-    db.session.commit()
-    transactions = list(Transactions.query.order_by(Transactions.id).all())
-    return render_template("sales.html", transactions=transactions)
+    if request.method == "POST":
+        transactions = list(Transactions.query.order_by(Transactions.id).all())
+        with open("sales_data.csv", "w", newline="") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(["Item Name", "Price", "Cost Price"])
+            for transaction in transactions:
+                writer.writerow([transaction.transactions_name, transaction.transactions_price, transaction.transactions_costprice])
+        days_sales=list(Transactions.query.order_by(Transactions.id).all())
+        for sale in days_sales:
+            delete_item=Transactions.query.get_or_404(sale.id)
+            db.session.delete(delete_item)
+        db.session.commit()
+        transactions=list(Transactions.query.order_by(Transactions.id).all())
+
+        # send email with sales data
+
+        now=datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
+
+        # Create the body of the message (a plain-text and an HTML version).
+
+        emailfrom = "gavin.brown@4uxdesign.com"
+        emailto = "gavin.brown@4uxdesign.com"
+        fileToSend = "sales_data.csv"
+        username = "gavin.brown@4uxdesign.com"
+        password = os.environ.get("EMAIL")
+
+        msg = MIMEMultipart()
+        msg["From"] = emailfrom
+        msg["To"] = emailto
+        msg["Subject"] = "sales data .csv for " + now
+        msg.preamble = ""
+
+        ctype, encoding = mimetypes.guess_type(fileToSend)
+        if ctype is None or encoding is not None:
+            ctype = "application/octet-stream"
+
+        maintype, subtype = ctype.split("/", 1)
+
+        # Create the attachment of the message in text/csv.
+            
+        filetosend='sales_data.csv'
+        fp = open(filetosend, 'rb')
+        attachment=MIMEBase(maintype, subtype)
+        attachment.set_payload(fp.read())
+        fp.close()
+        encoders.encode_base64(attachment)
+        attachment.add_header("Content-Disposition", "attachment", filename=fileToSend)
+        msg.attach(attachment)
+        
+
+        # Send the message via SMTP server.
+
+        
+        server = smtplib.SMTP("smtp.gmail.com:587")
+        server.starttls()
+        server.login(username,password)
+        server.sendmail(emailfrom, emailto, msg.as_string())
+        server.quit()
+
+        return redirect(url_for("main_menu"))
+    return render_template("email_sales.html")
 
 
 @app.route("/startscreen")
 def startscreen():
     return render_template("startscreen.html")
+
+
+conf={
+        'from': 'gavin.brown@4uxdesign.com',
+        'to': 'gavin.brown@4uxdesign.com',
+        'server': 'smtp.gmail.com',
+        'port': '587',
+        'tls': 'yes',
+        'login': 'gavin.brown@4uxdesign.com'
+        }
+
+report={
+        'filename': 'sales_data.csv'
+        }
