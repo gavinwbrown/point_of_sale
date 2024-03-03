@@ -48,7 +48,7 @@
                 <div class="card-body">
                    
                     <h5 class="card-title">{{ item.items_name }}</h5>
-                    <h6 class="card-sub-title">Sub-Menu: {{ submenus.submenu_name }}</h6>
+                    <h6 class="card-sub-title">Sub-Menu: {{ submenus.submenus_name }}</h6>
                     <p class="card-text">{{ item.items_description }}</p>
                     <p class="card-text fw-bold">£ {{ '%0.2f'|format(item.items_price) }}</p>
                     <a href="{{url_for('edit_items', submenus_id=item.id) }}"
