@@ -20,13 +20,20 @@ from email.mime.text import MIMEText
 
 # creates routes for the application
 
+
 @app.route("/")
+
+# initial page that loads at startup
+
 def home():
     return render_template("startscreen.html")
 
 
 @app.route("/main_menu")
 def main_menu():
+
+    # returns a list of all menus
+
     menus=list(Menus.query.order_by(Menus.menus_name).all())
     return render_template("main_menu.html", menus=menus)
 
@@ -81,13 +88,16 @@ def add_submenus(submenus_id, new_submenu):
         )
         db.session.add(submenus)
         db.session.commit()
+
+        # boolean true didn't work in jinja 2 if statemment/add submenus so I used a string
+
         return redirect(url_for("add_submenus", submenus_id=submenus_id, new_submenu='True'))
     return render_template("add_submenus.html", menus=menus, submenus=submenus, submenus_id=submenus_id, new_submenu=new_submenu)
 
 
 @app.route("/view_submenus/<int:submenus_id>")
 def view_submenus(submenus_id):
-    submenus=list(Submenus.query.filter_by(menus_id=submenus_id).all())
+    submenus=list(Submenus.query.filter_by(menus_id=submenus_id).order_by(Submenus.submenus_name).all())
     menus=Menus.query.get_or_404(submenus_id)
     return render_template("view_submenus.html",menus=menus, submenus=submenus, submenus_id=submenus_id)
 
@@ -95,13 +105,14 @@ def view_submenus(submenus_id):
 @app.route("/edit_submenus/<int:submenus_id>", methods=["GET", "POST"])
 def edit_submenus(submenus_id):
     submenus=Submenus.query.get_or_404(submenus_id)
+    menus_name=Submenus.query.get_or_404(submenus.menus_id)
     if request.method == "POST":
         submenus.submenus_name=request.form.get("submenus_name"),
         submenus.submenus_description=request.form.get("submenus_description")
         db.session.add(submenus)
         db.session.commit()
         return redirect(url_for("view_submenus", submenus_id=submenus.menus_id))
-    return render_template("edit_submenus.html", submenus=submenus)
+    return render_template("edit_submenus.html", submenus=submenus, menus_name=menus_name)
 
 
 @app.route("/delete_submenus/<int:submenus_id>", methods=["GET", "POST"])
@@ -117,9 +128,10 @@ def delete_submenus(submenus_id):
 @app.route("/view_items/<int:menus_id>", methods=["GET", "POST"])
 def view_items( menus_id):
     submenus=Submenus.query.get_or_404(menus_id)
-    items=list(Items.query.filter_by(submenus_id=menus_id).all())
+    items=list(Items.query.filter_by(submenus_id=menus_id).order_by(Items.items_name).all())
     return render_template("view_items.html", items=items, submenus=submenus, menus_id=menus_id)
 
+    
 
 @app.route("/add_items/<int:menus_id>/<new_item>", methods=["GET", "POST"])
 def add_items(menus_id, new_item):
@@ -135,6 +147,9 @@ def add_items(menus_id, new_item):
         )
         db.session.add(items)
         db.session.commit()
+
+        # boolean true didn't work in jinja 2 if statemment/add items so I used a string
+
         return redirect(url_for("add_items", items=items, menus_id=menus_id, submenus=submenus, new_item='True'))
     return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus, new_item=new_item)
 

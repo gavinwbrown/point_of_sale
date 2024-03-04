@@ -37,6 +37,15 @@
 
             {% endif %}
 
+            <!-- gets submenu name and description and POST it to postgresql database -->
+
+            <!--
+                here the new_submenu variable is set to 'True' triggering an alert
+                confirming the new submenu has been created (see code above). would 
+                have liked to have used a boolean value but jinja2 did not correctly
+                identify it so a string was used instead
+            -->
+
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
                     <h5 class="card-title">Add A New Sub-Menu</h5>
@@ -45,6 +54,9 @@
                         action="{{ url_for('add_submenus', submenus_id=submenus_id, new_submenu='True') }}"
                         method="POST">
                         <div class="col-12 py-3 text start">
+
+                            <!-- menu name is displayed. input disabled as cannot be changed -->
+
                             <input type="text" class="form-control" id="menus_id" name="menus_id" minlength="3"
                                 maxlength="25" required aria-describedby="menu_name"
                                 placeholder="{{ menus.menus_name }}" value="{{ menus.menus_name }}" disabled>
