@@ -20,8 +20,6 @@
 
 {% endblock %}
 
-
-
 {% block content %}
 
 <!-- form to accept submenu info and POST to create on database -->
@@ -33,8 +31,8 @@
             {% if new_submenu == 'True' %}
 
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>New Sub-Menu Added</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <strong>New Sub-Menu Added</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
             {% endif %}
@@ -43,24 +41,29 @@
                 <div class="card-body">
                     <h5 class="card-title">Add A New Sub-Menu</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_submenus', submenus_id=submenus_id, new_submenu='True') }}" method="POST">
+                    <form class="row"
+                        action="{{ url_for('add_submenus', submenus_id=submenus_id, new_submenu='True') }}"
+                        method="POST">
                         <div class="col-12 py-3 text start">
                             <input type="text" class="form-control" id="menus_id" name="menus_id" minlength="3"
-                            maxlength="25" required aria-describedby="menu_name"
-                            placeholder="{{ menus.menus_name }}" value="{{ menus.menus_name }}" disabled>
+                                maxlength="25" required aria-describedby="menu_name"
+                                placeholder="{{ menus.menus_name }}" value="{{ menus.menus_name }}" disabled>
                         </div>
                         <div class="col-12 py-3 text start">
-                            <input type="text" class="form-control" id="submenus_name" name="submenus_name" minlength="3"
-                                maxlength="25" required aria-describedby="sub_menu_name"
+                            <input type="text" class="form-control" id="submenus_name" name="submenus_name"
+                                minlength="3" maxlength="25" required aria-describedby="sub_menu_name"
                                 placeholder="Sub-Menu Name (3-25 characters)">
                         </div>
                         <div class="col-12 py-3 text start">
-                            <input type="text" class="form-control" id="submenus_description" name="submenus_description"
-                                minlength="3" maxlength="29" required aria-describedby="sub_menu_description"
+                            <input type="text" class="form-control" id="submenus_description"
+                                name="submenus_description" minlength="3" maxlength="29" required
+                                aria-describedby="sub_menu_description"
                                 placeholder="Sub-Menu Description (3-29 characters)">
                         </div>
                         <div class="col-12 py-3">
-                            <a href="{{ url_for('view_submenus', submenus_id=submenus_id) }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel <i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                            <a href="{{ url_for('view_submenus', submenus_id=submenus_id) }}"
+                                class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel
+                                <i class="fas fa-2x fa-window-close right ps-3"></i></a>
                             <button type="submit"
                                 class="d-inline-flex btn align-items-center justify-content-center text-bg-success btn-lg">Add
                                 Sub-Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></button>
@@ -71,5 +74,6 @@
             </div>
         </div>
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}

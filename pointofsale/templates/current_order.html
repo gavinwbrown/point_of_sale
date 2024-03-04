@@ -28,7 +28,6 @@
 
     <div class="row justify-content-center py-1">
 
-
         {% for order in current_order %}
 
         <div class="col-12 text-start py-2">
@@ -45,7 +44,6 @@
                             class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-sm">Remove
                             <i class="fas fa-2x fa-minus-square right ps-2"></i></a>
                     </div>
-
                 </div>
             </div>
 
@@ -54,7 +52,6 @@
         </div>
     </div>
 </div>
-<div style="height:8em"></div>
 
 {% endblock %}
 
@@ -62,7 +59,8 @@
 
 <!-- shows total price of order in footer and offers a paid option -->
 
-<div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a href="{{ url_for('transaction', total_price=total_price, total_costprice=total_costprice, current_order=current_order) }}"
+<div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a
+        href="{{ url_for('transaction', total_price=total_price, total_costprice=total_costprice, current_order=current_order) }}"
         class="btn btn-sm text-bg-success fs-3 me-3">£{{ '%0.2f'|format(total_price) }}</a></div>
 
 {% endblock %}

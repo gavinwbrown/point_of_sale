@@ -34,9 +34,9 @@
     </div>
     <div class="row justify-content-center py-2">
 
-        {% for menu in menus %}
-
         <!-- display all menus -->
+
+        {% for menu in menus %}
 
         <div class="col-12 col-md-6 col-lg-4 text-center py-2">
             <div class="card border-dark bg-dark-subtle">
@@ -60,11 +60,6 @@
         {% endfor %}
 
     </div>
-
-    <!-- prevent footer from partially covering menu cards -->
-
-    <div style="height:8em"></div>
-
-    {% endblock %}
-
 </div>
+
+{% endblock %}

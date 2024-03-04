@@ -36,8 +36,7 @@
                             <div class="col-12 py-3 text-start">
                                 <label for="menus_name">Menus Name</label>
                                 <input type="text" class="form-control" id="menus_name" name="menus_name" minlength="3"
-                                    maxlength="25" required aria-describedby="menu_name"
-                                    value="{{ menus.menus_name }}">
+                                    maxlength="25" required aria-describedby="menu_name" value="{{ menus.menus_name }}">
                             </div>
                             <div class="col-12 py-3 text-start">
                                 <label for="menus_description">Menus Description</label>
@@ -46,9 +45,12 @@
                                     value="{{ menus.menus_description }}">
                             </div>
                             <div class="col-12 py-3">
-                                <a href="{{ url_for('main_menu') }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-primary">Cancel<i class="fas fa-2x fa-window-close right ps-3"></i></a>
-                                <button type="submit" class="d-inline-flex align-items-center justify-content-center btn text-bg-success">Update Menu <i
-                                    class="fas fa-2x fa-edit right ps-3"></i></button>
+                                <a href="{{ url_for('main_menu') }}"
+                                    class="d-inline-flex align-items-center justify-content-center btn text-bg-primary">Cancel<i
+                                        class="fas fa-2x fa-window-close right ps-3"></i></a>
+                                <button type="submit"
+                                    class="d-inline-flex align-items-center justify-content-center btn text-bg-success">Update
+                                    Menu <i class="fas fa-2x fa-edit right ps-3"></i></button>
                             </div>
                         </form>
                     </div>
@@ -57,5 +59,6 @@
             </div>
         </div>
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}

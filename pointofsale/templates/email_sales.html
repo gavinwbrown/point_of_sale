@@ -1,4 +1,4 @@
-<!-- displays the days sales and offers an export as .csv file option ** FLASK EXCEL TO BE USED FOR THIS ** -->
+<!-- displays the days sales and offers an export as .csv file option -->
 
 {% extends "base.html" %}
 
@@ -22,6 +22,12 @@
 
 {% block content %}
 
+<!-- 
+    get a valid email address
+    incorrect address errors handled 
+    by email client. in this case gmail
+-->
+
 <div class="container ">
     <div class="row py-3">
         <div class="card border-dark bg-dark-subtle">
@@ -34,20 +40,15 @@
                             aria-describedby="email_address" placeholder="{{ send_address }}">
                     </div>
                     <div class="col-3 py-3">
-                        <button type="submit" class="d-inline-flex btn align-items-center justify-content-center text-bg-success">
+                        <button type="submit"
+                            class="d-inline-flex btn align-items-center justify-content-center text-bg-success">
                             Email Me</button>
                     </div>
                 </form>
                 </p>
             </div>
         </div>
-
     </div>
-
-    <!-- prevent footer from partially covering sales cards -->
-
-    <div style="height:8em"></div>
-
 </div>
 
 {% endblock %}

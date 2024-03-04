@@ -189,6 +189,9 @@ def total(current_order):
 
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>/<item_costprice>", methods=["GET", "POST"])
+
+# adds the selected item to the current order
+
 def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
     submenus=Submenus.query.get_or_404(submenus_id)
     items=list(Items.query.filter_by(submenus_id=submenus_id).all())
@@ -204,6 +207,9 @@ def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
 
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
+
+# removes the selected item from the current order
+
 def remove_item(item_id):
     delete_item=Currentorder.query.get_or_404(item_id)
     item_name=delete_item.currentorder_name
@@ -215,9 +221,13 @@ def remove_item(item_id):
 
 
 @app.route("/transaction/<total_price>/<total_costprice>")
+
+# adds the current order to the transactions table by calling the add_transactions fn
+
 def transaction(total_price, total_costprice):
         add_transactions(total_price, total_costprice)
         return render_template("current_order.html", total_price=0)
+
 
 def add_transactions(total_price, total_costprice):
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
@@ -240,14 +250,19 @@ def add_transactions(total_price, total_costprice):
     return
    
 
-
 @app.route("/sales")
+
+# returns a list of all current transactions
+
 def sales():
     transactions = list(Transactions.query.order_by(Transactions.id).all())
     return render_template("sales.html", transactions=transactions)
 
 
 @app.route("/email_sales/<send_address>", methods=["GET", "POST"])
+
+# sends a .csv file of the days sales to a nominated email address. see readme for credits
+
 def email_sales(send_address):
     
     if request.method == "POST":
@@ -263,13 +278,12 @@ def email_sales(send_address):
             delete_item=Transactions.query.get_or_404(sale.id)
             db.session.delete(delete_item)
         db.session.commit()
-        # transactions=list(Transactions.query.order_by(Transactions.id).all())
 
         # send email with sales data
 
         now=datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
 
-        # Create the body of the message (a plain-text and an HTML version).
+        # Create the body of the message plaintext and html
 
         emailfrom = "gavin.brown@4uxdesign.com"
         
@@ -286,7 +300,6 @@ def email_sales(send_address):
         ctype, encoding = mimetypes.guess_type(filetosend)
         if ctype is None or encoding is not None:
             ctype = "application/octet-stream"
-
         maintype, subtype = ctype.split("/", 1)
 
         # Create the attachment of the message in text/csv.
@@ -307,7 +320,6 @@ def email_sales(send_address):
         server.login(username,password)
         server.sendmail(emailfrom, send_address, msg.as_string())
         server.quit()
-
         return redirect(url_for("main_menu"))
     return render_template("email_sales.html", send_address=send_address)
 

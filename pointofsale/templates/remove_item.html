@@ -29,7 +29,7 @@
         <div class="col-12 text-center py-4">
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
-                    <h5 class="card-title">Delete Item</h5>
+                    <h5 class="card-title">Remove Item From Order</h5>
                     <p class="card-text">
                     <div class="rows">
                         <form action="{{ url_for('remove_item', item_id=delete_item.id) }}" method="POST">
@@ -44,6 +44,7 @@
                                         class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-lg">Remove<i
                                             class="fas fa-2x fa-minus-square right ps-3"></i></button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                     </p>
@@ -51,5 +52,6 @@
             </div>
         </div>
     </div>
+</div>
 
-    {% endblock %}
+{% endblock %}
