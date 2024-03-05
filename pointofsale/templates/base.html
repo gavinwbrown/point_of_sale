@@ -18,10 +18,13 @@
   <title>Expresso</title>
 </head>
 
-<!-- Bootstrap for navbar. -->
+<!-- Custom CSS creating a spacer div preventing content being hidden by fixed header. -->
 
-<body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+<body style="padding-top: 6em">
+
+  <!-- Bootstrap for navbar. -->
+
+  <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{url_for('startscreen') }}"><i class="fas fa-3x fa-coffee"></i></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -39,9 +42,9 @@
   </nav>
   <main class="container">{% block content %} {% endblock %}</main>
 
-  <!-- The only piece of custom CSS creating a spacer div preventing content being hidden by fixed footer. -->
+  <!-- Custom CSS creating a spacer div preventing content being hidden by fixed footer. -->
 
-  <div class="d-flex w-100" style="height: 5em"></div>
+  <div style="height: 5em"></div>
   <div class="container-flex fs-2">
 
     <!-- Bootstrap for footer. -->
