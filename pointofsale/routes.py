@@ -1,4 +1,4 @@
-# import mecessary modules
+# import necessary modules
 
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
@@ -11,14 +11,7 @@ import smtplib
 import mimetypes
 from email.mime.multipart import MIMEMultipart
 from email import encoders
-from email.message import Message
-from email.mime.audio import MIMEAudio
 from email.mime.base import MIMEBase
-from email.mime.image import MIMEImage
-from email.mime.text import MIMEText
-
-
-# creates routes for the application
 
 
 @app.route("/")
@@ -47,10 +40,7 @@ def add_menus(new_menu):
         )
         db.session.add(menus)
         db.session.commit()
-
-        # boolean true didn't work in jinja 2 if statemment/add menus so I used a string
-
-        return redirect(url_for("add_menus", new_menu='True'))
+        return redirect(url_for("add_menus", new_menu=True))
     return render_template("add_menus.html", new_menu=new_menu)
 
 
@@ -88,10 +78,7 @@ def add_submenus(submenus_id, new_submenu):
         )
         db.session.add(submenus)
         db.session.commit()
-
-        # boolean true didn't work in jinja 2 if statemment/add submenus so I used a string
-
-        return redirect(url_for("add_submenus", submenus_id=submenus_id, new_submenu='True'))
+        return redirect(url_for("add_submenus", submenus_id=submenus_id, new_submenu=True))
     return render_template("add_submenus.html", menus=menus, submenus=submenus, submenus_id=submenus_id, new_submenu=new_submenu)
 
 
@@ -132,32 +119,28 @@ def view_items( menus_id):
     return render_template("view_items.html", items=items, submenus=submenus, menus_id=menus_id)
 
     
-
 @app.route("/add_items/<int:menus_id>/<new_item>", methods=["GET", "POST"])
 def add_items(menus_id, new_item):
-    items=list(Items.query.order_by(Items.submenus_id).all())
-    submenus=Submenus.query.get_or_404(menus_id)
+    # Gets the submenu associated with the items using the Submenus field menus_id.
+    submenus = Submenus.query.get_or_404(menus_id)
     if request.method == "POST":
         items=Items(
-        items_name=request.form.get("items_name"),
-        items_description=request.form.get("items_description"),
-        items_price=request.form.get("items_price"),
-        items_costprice=request.form.get("items_costprice"),
-        submenus_id=menus_id
+        items_name = request.form.get("items_name"),
+        items_description = request.form.get("items_description"),
+        items_price = request.form.get("items_price"),
+        items_costprice = request.form.get("items_costprice"),
+        submenus_id = menus_id
         )
         db.session.add(items)
         db.session.commit()
-
-        # boolean true didn't work in jinja 2 if statemment/add items so I used a string
-
-        return redirect(url_for("add_items", items=items, menus_id=menus_id, submenus=submenus, new_item='True'))
-    return render_template("add_items.html", items=items, menus_id=menus_id, submenus=submenus, new_item=new_item)
+        return redirect(url_for("add_items", menus_id=menus_id, submenus=submenus, new_item=True))
+    return render_template("add_items.html", menus_id=menus_id, submenus=submenus, new_item=new_item)
 
 
 @app.route("/edit_items/<int:submenus_id>", methods=["GET", "POST"])
 def edit_items(submenus_id):
     items=Items.query.get_or_404(submenus_id)
-    submenus_name=Submenus.query.get_or_404(items.submenus_id)
+    submenus_name = Submenus.query.get_or_404(items.submenus_id)
     if request.method == "POST":
         items.items_name=request.form.get("items_name"),
         items.items_description=request.form.get("items_description"),
@@ -180,9 +163,7 @@ def delete_items(submenus_id):
 
 
 @app.route("/current_order")
-
-# returns the current order and it's total price
-
+# Returns the current order and it's total price.
 def current_order():
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
     total_price, total_costprice=total(current_order)
@@ -190,31 +171,27 @@ def current_order():
 
 
 def total(current_order):
-
-    # function to return the total price of the current order
-
-    total_price=0
-    total_costprice=0
+    # Function to return the total price and total cost price of the current order.
+    total_price = 0
+    total_costprice = 0
     for price in current_order:
-        total_price+=price.currentorder_price
-        total_costprice+=price.currentorder_costprice
-    total_price=round(total_price, 2)
-    total_costprice=round(total_costprice, 2)
+        total_price += price.currentorder_price
+        total_costprice += price.currentorder_costprice
+    total_price = round(total_price, 2)
+    total_costprice = round(total_costprice, 2)
     return total_price, total_costprice
 
 
 @app.route("/addto_order/<int:item_id>/<int:submenus_id>/<item_name>/<item_price>/<item_costprice>", methods=["GET", "POST"])
-
-# adds the selected item to the current order
-
+# Adds the selected item to the current order.
 def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
     submenus=Submenus.query.get_or_404(submenus_id)
-    items=list(Items.query.filter_by(submenus_id=submenus_id).all())
+    items = list(Items.query.filter_by(submenus_id=submenus_id).all())
     current_order=Currentorder(
-        currentorder_name=item_name,
-        currentorder_price=item_price,
+        currentorder_name = item_name,
+        currentorder_price = item_price,
         currentorder_costprice=item_costprice,
-        item_id=item_id
+        item_id = item_id
     )
     db.session.add(current_order)
     db.session.commit()
@@ -222,12 +199,10 @@ def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
 
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
-
-# removes the selected item from the current order
-
+# Removes the selected item from the current order.
 def remove_item(item_id):
-    delete_item=Currentorder.query.get_or_404(item_id)
-    item_name=delete_item.currentorder_name
+    delete_item = Currentorder.query.get_or_404(item_id)
+    item_name = delete_item.currentorder_name
     if request.method == "POST":
         db.session.delete(delete_item)
         db.session.commit()
@@ -236,9 +211,7 @@ def remove_item(item_id):
 
 
 @app.route("/transaction/<total_price>/<total_costprice>")
-
-# adds the current order to the transactions table by calling the add_transactions fn
-
+# Adds the current order to the transactions table by calling the add_transactions function.
 def transaction(total_price, total_costprice):
         add_transactions(total_price, total_costprice)
         return render_template("current_order.html", total_price=0)
@@ -247,7 +220,7 @@ def transaction(total_price, total_costprice):
 def add_transactions(total_price, total_costprice):
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
     for item in current_order:
-        add_transaction=Transactions(
+        add_transaction = Transactions(
             transactions_name=item.currentorder_name,
             transactions_price=item.currentorder_price,
             transactions_costprice=item.currentorder_costprice
@@ -266,70 +239,55 @@ def add_transactions(total_price, total_costprice):
    
 
 @app.route("/sales")
-
 # returns a list of all current transactions
-
 def sales():
     transactions = list(Transactions.query.order_by(Transactions.id).all())
     return render_template("sales.html", transactions=transactions)
 
 
 @app.route("/email_sales/<send_address>", methods=["GET", "POST"])
-
-# sends a .csv file of the days sales to a nominated email address. see readme for credits
-
+# Sends a .csv file of the days sales to a nominated email address. See readme for credits.
 def email_sales(send_address):
     
     if request.method == "POST":
-        send_address=request.form.get("email_address")
+        send_address = request.form.get("email_address")
         transactions = list(Transactions.query.order_by(Transactions.id).all())
         with open("sales_data.csv", "w", newline="") as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(["Item Name", "Price", "Cost Price"])
             for transaction in transactions:
                 writer.writerow([transaction.transactions_name, transaction.transactions_price, transaction.transactions_costprice])
-        days_sales=list(Transactions.query.order_by(Transactions.id).all())
+        days_sales = list(Transactions.query.order_by(Transactions.id).all())
         for sale in days_sales:
-            delete_item=Transactions.query.get_or_404(sale.id)
+            delete_item = Transactions.query.get_or_404(sale.id)
             db.session.delete(delete_item)
         db.session.commit()
-
-        # send email with sales data
-
-        now=datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
-
-        # Create the body of the message plaintext and html
-
+        # Send email with sales data
+        now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
+        # Create the body of the message plaintext and HTML.
         emailfrom = "gavin.brown@4uxdesign.com"
-        
         filetosend = "sales_data.csv"
         username = "gavin.brown@4uxdesign.com"
         password = os.environ.get("EMAIL")
-
         msg = MIMEMultipart()
         msg["From"] = emailfrom
         msg["To"] = send_address
         msg["Subject"] = "sales data .csv for " + now
         msg.preamble = ""
-
         ctype, encoding = mimetypes.guess_type(filetosend)
         if ctype is None or encoding is not None:
             ctype = "application/octet-stream"
         maintype, subtype = ctype.split("/", 1)
-
         # Create the attachment of the message in text/csv.
-            
         filetosend='sales_data.csv'
         fp = open(filetosend, 'rb')
-        attachment=MIMEBase(maintype, subtype)
+        attachment = MIMEBase(maintype, subtype)
         attachment.set_payload(fp.read())
         fp.close()
         encoders.encode_base64(attachment)
         attachment.add_header("Content-Disposition", "attachment", filename=filetosend)
         msg.attach(attachment)
-
         # Send the message via SMTP server.
-        
         server = smtplib.SMTP("smtp.gmail.com:587")
         server.starttls()
         server.login(username,password)
@@ -341,6 +299,7 @@ def email_sales(send_address):
 
 @app.route("/startscreen")
 def startscreen():
+    # The initial page that loads at startup.
     return render_template("startscreen.html")
 
 

@@ -1,10 +1,10 @@
-<!-- displays the days sales and offers an export as .csv file option -->
+<!-- Displays the days sales and offers an export option as .csv file. -->
 
 {% extends "base.html" %}
 
 {% block header %}
 
-<!-- sets active navbar tab to sales -->
+<!-- Sets active navbar tab to sales. -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -23,9 +23,9 @@
 {% block content %}
 
 <!-- 
-    get a valid email address
-    incorrect address errors handled 
-    by email client. in this case gmail
+    Get a valid email address from the user. Format errors checked and handled by browser.
+    Non valid email address errors upon send handled by SMTP email client resulting in a 
+    'failed to send error'. In this case the SMTP server is gmail.
 -->
 
 <div class="container ">

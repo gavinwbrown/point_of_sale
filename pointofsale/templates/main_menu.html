@@ -1,10 +1,10 @@
-<!-- display all current menus. acts as the homescreen -->
+<!-- Display all current menus. Acts as the homescreen. -->
 
 {% extends "base.html" %}
 
 {% block header %}
 
-<!-- sets active navbar tab to menus -->
+<!-- Sets active navbar tab to menus. -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -22,7 +22,7 @@
 
 {% block content %}
 
-<!-- on page navigation options -->
+<!-- On page navigation options. -->
 
 <div class="container mb-3 mb-md-0">
     <div class="row justify-content-center">
@@ -34,7 +34,7 @@
     </div>
     <div class="row justify-content-center py-2">
 
-        <!-- display all menus -->
+        <!-- Display all menus. -->
 
         {% for menu in menus %}
 

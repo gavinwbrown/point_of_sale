@@ -1,10 +1,10 @@
-<!-- displays the add submenu screen and allows new submenus to be created -->
+<!-- Displays the add submenu screen and allows new submenus to be created. -->
 
 {% extends "base.html" %}
 
 {% block header %}
 
-<!-- sets active navbar tab to menus -->
+<!-- Sets active navbar tab to menus. -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -22,7 +22,7 @@
 
 {% block content %}
 
-<!-- form to accept submenu info and POST to create on database -->
+<!-- Form to accept submenu info and POST to create on database. -->
 
 <div class="container ">
     <div class="row">
@@ -37,13 +37,12 @@
 
             {% endif %}
 
-            <!-- gets submenu name and description and POST it to postgresql database -->
+            <!-- Gets submenu name and description and POST it to postgresql database. -->
 
             <!--
-                here the new_submenu variable is set to 'True' triggering an alert
-                confirming the new submenu has been created (see code above). would 
-                have liked to have used a boolean value but jinja2 did not correctly
-                identify it so a string was used instead
+                Here the new submenu variable is set to boolean True triggering an alert
+                confirming the new submenu has been created (see code above). Jinja2 evaluates
+                as a string ie 'True'.
             -->
 
             <div class="card border-dark bg-dark-subtle">
@@ -51,11 +50,11 @@
                     <h5 class="card-title">Add A New Sub-Menu</h5>
                     <p class="card-text">
                     <form class="row"
-                        action="{{ url_for('add_submenus', submenus_id=submenus_id, new_submenu='True') }}"
+                        action="{{ url_for('add_submenus', submenus_id=submenus_id, new_submenu=True) }}"
                         method="POST">
                         <div class="col-12 py-3 text start">
 
-                            <!-- menu name is displayed. input disabled as cannot be changed -->
+                            <!-- Menu name is displayed. Input disabled as cannot be changed. -->
 
                             <input type="text" class="form-control" id="menus_id" name="menus_id" minlength="3"
                                 maxlength="25" required aria-describedby="menu_name"

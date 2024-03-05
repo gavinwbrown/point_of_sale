@@ -1,10 +1,10 @@
-<!-- displays the add items screen and allows new items to be created -->
+<!-- Displays the add items screen and allows new items to be created. -->
 
 {% extends "base.html" %}
 
 {% block header %}
 
-<!-- sets active navbar tab to menus -->
+<!-- Sets active navbar tab to menus. -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -22,7 +22,7 @@
 
 {% block content %}
 
-<!-- form to accept item info and POST to create on database -->
+<!-- Form to accept item info and POST to create on postgresql database. -->
 
 <div class="container ">
     <div class="row">
@@ -38,28 +38,28 @@
             {% endif %}
 
             <!--
-                here the new_item variable is set to 'True' triggering an alert
-                confirming the new item has been created (see code above). would 
-                have liked to have used a boolean value but jinja2 did not correctly
-                identify it so a string was used instead
+                Here the new_item variable is set to boolean True
+                 triggering an alert confirming the new item has
+                 been created (see code above). Jinja2 evaluates
+                as a string ie 'True'.
             -->
 
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
                     <h5 class="card-title">Add A New Item</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item='True') }}"
+                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
                         method="POST">
                         <div class="col-12 py-3">
 
-                            <!-- submenu name is displayed. input disabled as cannot be changed -->
+                            <!-- Submenu name is displayed. Input disabled as cannot be changed. -->
 
                             <input type="text" class="form-control" id="submenus_id" name="submenus_id" minlength="3"
                                 maxlength="25" required aria-describedby="submenu_name"
                                 placeholder="Submenu: {{ submenus.submenus_name }}" disabled>
                         </div>
 
-                        <!-- fields for item name, description, price and cost price -->
+                        <!-- Fields for item name, description, price and cost price. -->
 
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_name" name="items_name" minlength="3"

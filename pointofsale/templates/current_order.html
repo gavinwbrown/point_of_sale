@@ -1,10 +1,10 @@
-<!-- display the current order -->
+<!-- Display the current order. -->
 
 {% extends "base.html" %}
 
 {% block header %}
 
-<!-- sets active navbar tab to order -->
+<!-- Sets active navbar tab to order. -->
 
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
@@ -22,10 +22,9 @@
 
 {% block content %}
 
-<!-- list the items as bootstrap cards for the current order and offer a remove option -->
+<!-- List the items as Bootstrap cards for the current order and offer a remove option. -->
 
 <div class="container">
-
     <div class="row justify-content-center py-1">
 
         {% for order in current_order %}
@@ -57,7 +56,7 @@
 
 {% block footer%}
 
-<!-- shows total price of order in footer and offers a paid option -->
+<!-- Shows total price of order in footer and offers a paid option. -->
 
 <div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a
         href="{{ url_for('transaction', total_price=total_price, total_costprice=total_costprice, current_order=current_order) }}"
