@@ -1,0 +1,100 @@
+<!-- Displays the add items screen and allows new items to be created. -->
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<!-- Sets active navbar tab to menus. -->
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link fs-2 active" aria-current="page" href="{{url_for('main_menu') }}">Menus</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('current_order') }}">Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('sales') }}">Sales</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Form to accept item info and POST to create on postgresql database. -->
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+
+            {% if new_item == 'True' %}
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>New Item Added</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            {% endif %}
+
+            <!--
+                Here the new_item variable is set to boolean True
+                 triggering an alert confirming the new item has
+                 been created (see code above). Jinja2 evaluates
+                as a string ie 'True'.
+            -->
+
+            <div class="card border-dark bg-dark-subtle">
+                <div class="card-body">
+                    <h5 class="card-title">Add A New Item</h5>
+                    <p class="card-text">
+                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
+                        method="POST">
+                        <div class="col-12 py-3">
+
+                            <!-- Submenu name is displayed. Input disabled as cannot be changed. -->
+
+                            <input type="text" class="form-control" id="submenus_id" name="submenus_id" minlength="3"
+                                maxlength="25" required aria-describedby="submenu_name"
+                                placeholder="Submenu: {{ submenus.submenus_name }}" disabled>
+                        </div>
+
+                        <!-- Fields for item name, description, price and cost price. -->
+
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="items_name" name="items_name" minlength="3"
+                                maxlength="25" required aria-describedby="item_name"
+                                placeholder="Item Name (3-25 characters)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="items_description" name="items_description"
+                                minlength="3" maxlength="29" required aria-describedby="items_description"
+                                placeholder="Item Description (3-29 characters)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="items_price" name="items_price" minlength="3"
+                                maxlength="29" required aria-describedby="items_price"
+                                placeholder="Item Price (enter if format 00.00)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <input type="text" class="form-control" id="items_costprice" name="items_costprice"
+                                minlength="3" maxlength="29" required aria-describedby="items_cost_price"
+                                placeholder="Item Cost Price (enter if format 00.00)">
+                        </div>
+                        <div class="col-12 py-3">
+                            <a href="{{ url_for('view_items', menus_id=menus_id, submenus_id=submenus_id ) }}"
+                                class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Back
+                                To Items <i class="fas fa-2x fa-window-close right ps-3"></i></a>
+                            <button type="submit"
+                                class="d-inline-flex btn align-items-center justify-content-center text-bg-success btn-lg">Add
+                                Item <i class="fas fa-2x fa-plus-square right ps-3"></i></button>
+                        </div>
+                    </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

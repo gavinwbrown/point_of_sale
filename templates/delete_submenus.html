@@ -1,0 +1,59 @@
+<!-- Confirmation screen for submenu deletion. -->
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<!-- Sets active navbar tab to menus. -->
+
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link fs-2 active" aria-current="page" href="{{url_for('main_menu') }}">Menus</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('current_order') }}">Order</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link fs-2" aria-current="page" href="{{url_for('sales') }}">Sales</a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- Delete the submenu. -->
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12 text-center py-4">
+            <div class="card border-dark bg-dark-subtle">
+                <div class="card-body">
+                    <h5 class="card-title">Delete Sub-Menu</h5>
+                    <p class="card-text">
+                    <div class="rows">
+                        <form action="{{ url_for('delete_submenus', submenus_id=submenus.id) }}" method="POST">
+                            <div class="col-12 py-3">
+                                <p aria-describedby="delete_description">Deleting a Sub-Menu deletes all associated
+                                    Items.</p>
+                                <p aria-describedby="delete_description">Red button to confirm deletion of
+                                    {{submenus.submenus_name }}.</p>
+                                <div class="col-12 py-3">
+                                    <a href="{{ url_for('view_submenus', submenus_id=submenus.menus_id) }}"
+                                        class="d-inline-flex align-items-center justify-content-center btn text-bg-primary btn-lg">Cancel<i
+                                            class="fas fa-2x fa-window-close right ps-3"></i></a>
+                                    <button type="submit"
+                                        class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-lg">Delete<i
+                                            class="fas fa-2x fa-minus-square right ps-3"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
