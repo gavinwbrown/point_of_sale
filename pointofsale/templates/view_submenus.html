@@ -37,8 +37,7 @@
                 Sub-Menu <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
         </div>
     </div>
-</div>
-<div class="row justify-content-center py-2">
+    <div class="row justify-content-center py-2">
 
     <!-- display all submenus -->
 
@@ -48,7 +47,7 @@
         <div class="card border-dark bg-dark-subtle">
             <div class="card-body">
                 <h5 class="card-title">{{ submenu.submenus_name }}</h5>
-                <h6>Menu: {{ menus.menus_name  }}</h5>
+                <h6 class="card-sub-title">Menu: {{ menus.menus_name  }}</h5>
                 <p class="card-text">{{ submenu.submenus_description }}</p>
                 <a href="{{ url_for('edit_submenus', submenus_id=submenu.id) }}"
                     class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-success btn-sm">Edit
