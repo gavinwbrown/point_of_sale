@@ -60,6 +60,6 @@
 
 <div class="d-flex text-end col-6 text-white align-items-center justify-content-end"><a
         href="{{ url_for('transaction', total_price=total_price, total_costprice=total_costprice, current_order=current_order) }}"
-        class="btn btn-sm text-bg-success fs-3 me-3">£{{ '%0.2f'|format(total_price) }}</a></div>
+        class="btn btn-sm text-bg-success fs-4">£{{ '%0.2f'|format(total_price) }}</a></div>
 
 {% endblock %}
