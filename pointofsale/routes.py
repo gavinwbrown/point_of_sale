@@ -94,7 +94,7 @@ def view_submenus(submenus_id):
 def edit_submenus(submenus_id):
     # Get the selected submenu and associated menu.
     submenus=Submenus.query.get_or_404(submenus_id)
-    menus_name=Submenus.query.get_or_404(submenus.menus_id)
+    menus_name=Menus.query.get_or_404(submenus.menus_id)
     # If the method is POST then update postgresql database with changes.
     if request.method == "POST":
         submenus.submenus_name=request.form.get("submenus_name"),
