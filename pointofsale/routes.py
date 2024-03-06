@@ -1,12 +1,10 @@
-# import necessary modules
-
+# Import necessary modules.
 from flask import render_template, request, redirect, url_for
 from pointofsale import app, db
 from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
 import csv, os, datetime
 
-# import necessary modules for email
-
+# Import necessary modules for email.
 import smtplib
 import mimetypes
 from email.mime.multipart import MIMEMultipart
@@ -15,23 +13,20 @@ from email.mime.base import MIMEBase
 
 
 @app.route("/")
-
-# initial page that loads at startup
-
+# Initial page that loads at startup.
 def home():
     return render_template("startscreen.html")
 
 
 @app.route("/main_menu")
 def main_menu():
-
-    # returns a list of all menus
-
+    # Returns a list of all menus.
     menus=list(Menus.query.order_by(Menus.menus_name).all())
     return render_template("main_menu.html", menus=menus)
 
 
 @app.route("/add_menus/<new_menu>", methods=["GET", "POST"])
+# Adds a new menu flags new_menu as True so an alert message is displayed.
 def add_menus(new_menu):
     if request.method == "POST":
         menus=Menus(
@@ -46,6 +41,7 @@ def add_menus(new_menu):
 
 @app.route("/edit_menus/<int:menus_id>", methods=["GET", "POST"])
 def edit_menus(menus_id):
+    # Edit the selected menu.
     menus=Menus.query.get_or_404(menus_id)
     if request.method == "POST":
         menus.menus_name=request.form.get("menus_name"),
@@ -58,6 +54,7 @@ def edit_menus(menus_id):
 
 @app.route("/delete_menus/<int:menus_id>", methods=["GET", "POST"])
 def delete_menus(menus_id):
+    # Delete the selected menu.
     menus=Menus.query.get_or_404(menus_id)
     if request.method == "POST":
         db.session.delete(menus)
@@ -68,7 +65,9 @@ def delete_menus(menus_id):
 
 @app.route("/add_submenus/<int:submenus_id>/<new_submenu>", methods=["GET", "POST"])
 def add_submenus(submenus_id, new_submenu):
+    # Get a list of all submenus associated with the selected menu.
     submenus=list(Submenus.query.filter_by(menus_id=submenus_id).all())
+    # Needs the menu associated with the submenu.
     menus=Menus.query.get_or_404(submenus_id)
     if request.method == "POST":
         submenus=Submenus(
@@ -78,12 +77,14 @@ def add_submenus(submenus_id, new_submenu):
         )
         db.session.add(submenus)
         db.session.commit()
+        # Flags new_submenu as True. To display alert message.
         return redirect(url_for("add_submenus", submenus_id=submenus_id, new_submenu=True))
     return render_template("add_submenus.html", menus=menus, submenus=submenus, submenus_id=submenus_id, new_submenu=new_submenu)
 
 
 @app.route("/view_submenus/<int:submenus_id>")
 def view_submenus(submenus_id):
+    # view all current submenus.
     submenus=list(Submenus.query.filter_by(menus_id=submenus_id).order_by(Submenus.submenus_name).all())
     menus=Menus.query.get_or_404(submenus_id)
     return render_template("view_submenus.html",menus=menus, submenus=submenus, submenus_id=submenus_id)
@@ -218,16 +219,20 @@ def transaction(total_price, total_costprice):
 
 
 def add_transactions(total_price, total_costprice):
+    # Calculates the total price and cost price of the current order.
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
     for item in current_order:
+        # Add the current order to transactions table.
         add_transaction = Transactions(
             transactions_name=item.currentorder_name,
             transactions_price=item.currentorder_price,
             transactions_costprice=item.currentorder_costprice
         )
+        # Delete the transaction from the current order.
         db.session.add(add_transaction)
         delete_item=Currentorder.query.get_or_404(item.id)
         db.session.delete(delete_item)
+        # Add a 'total' transaction that includes total price and cost price.
     add_total=Transactions(
         transactions_name="total",
         transactions_price=total_price,
@@ -239,7 +244,7 @@ def add_transactions(total_price, total_costprice):
    
 
 @app.route("/sales")
-# returns a list of all current transactions
+# Returns a list of all current transactions.
 def sales():
     transactions = list(Transactions.query.order_by(Transactions.id).all())
     return render_template("sales.html", transactions=transactions)
@@ -248,7 +253,6 @@ def sales():
 @app.route("/email_sales/<send_address>", methods=["GET", "POST"])
 # Sends a .csv file of the days sales to a nominated email address. See readme for credits.
 def email_sales(send_address):
-    
     if request.method == "POST":
         send_address = request.form.get("email_address")
         transactions = list(Transactions.query.order_by(Transactions.id).all())
