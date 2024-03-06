@@ -92,8 +92,10 @@ def view_submenus(submenus_id):
 
 @app.route("/edit_submenus/<int:submenus_id>", methods=["GET", "POST"])
 def edit_submenus(submenus_id):
+    # Get the selected submenu and associated menu.
     submenus=Submenus.query.get_or_404(submenus_id)
     menus_name=Submenus.query.get_or_404(submenus.menus_id)
+    # If the method is POST then update postgresql database with changes.
     if request.method == "POST":
         submenus.submenus_name=request.form.get("submenus_name"),
         submenus.submenus_description=request.form.get("submenus_description")
@@ -105,6 +107,7 @@ def edit_submenus(submenus_id):
 
 @app.route("/delete_submenus/<int:submenus_id>", methods=["GET", "POST"])
 def delete_submenus(submenus_id):
+    # Delete the selected submenu if method is POST.
     submenus=Submenus.query.get_or_404(submenus_id)
     if request.method == "POST":
         db.session.delete(submenus)
@@ -115,6 +118,7 @@ def delete_submenus(submenus_id):
 
 @app.route("/view_items/<int:menus_id>", methods=["GET", "POST"])
 def view_items( menus_id):
+    # view all current items.
     submenus=Submenus.query.get_or_404(menus_id)
     items=list(Items.query.filter_by(submenus_id=menus_id).order_by(Items.items_name).all())
     return render_template("view_items.html", items=items, submenus=submenus, menus_id=menus_id)
@@ -134,14 +138,17 @@ def add_items(menus_id, new_item):
         )
         db.session.add(items)
         db.session.commit()
+        # Flags new_item as True. To display alert message.
         return redirect(url_for("add_items", menus_id=menus_id, submenus=submenus, new_item=True))
     return render_template("add_items.html", menus_id=menus_id, submenus=submenus, new_item=new_item)
 
 
 @app.route("/edit_items/<int:submenus_id>", methods=["GET", "POST"])
 def edit_items(submenus_id):
+    # Get the selected item and it's associated submenu.
     items=Items.query.get_or_404(submenus_id)
     submenus_name = Submenus.query.get_or_404(items.submenus_id)
+    # If the method is POST then update postgresql database with changes.
     if request.method == "POST":
         items.items_name=request.form.get("items_name"),
         items.items_description=request.form.get("items_description"),
@@ -155,6 +162,7 @@ def edit_items(submenus_id):
 
 @app.route("/delete_items/<int:submenus_id>", methods=["GET", "POST"])
 def delete_items(submenus_id):
+    # Delete the selected item if method is POST.
     items=Items.query.get_or_404(submenus_id)
     if request.method == "POST":
         db.session.delete(items)
