@@ -195,7 +195,7 @@ def total(current_order):
 # Adds the selected item to the current order.
 def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
     submenus=Submenus.query.get_or_404(submenus_id)
-    items = list(Items.query.filter_by(submenus_id=submenus_id).all())
+    items = list(Items.query.filter_by(submenus_id=submenus_id).order_by(Items.items_name).all())
     current_order=Currentorder(
         currentorder_name = item_name,
         currentorder_price = item_price,
@@ -204,7 +204,7 @@ def addto_order(item_id, submenus_id, item_name, item_price, item_costprice):
     )
     db.session.add(current_order)
     db.session.commit()
-    return render_template("view_items.html", menus_id=item_id, submenus_id=submenus_id, submenus=submenus, items=items)
+    return render_template("view_items.html", menus_id=submenus_id, submenus=submenus, items=items)
 
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
