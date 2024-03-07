@@ -26,14 +26,14 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-4 text-center pt-2">
+        <div class="col-6 col-md-4 text-center pt-2">
             <a href="{{ url_for('view_submenus', submenus_id=submenus.menus_id) }}"
                 class="d-inline-flex w-100 align-items-center justify-content-center btn text-bg-primary">Back <i class="fas fa-2x fa-window-close right ps-3"></i></a>
         </div>
-        <div class="col-sm-12 col-md-4 order-5 order-md-1 text-center pt-2">
+        <div class="col-12 col-md-4 order-5 order-md-1 text-center pt-2">
             <div class="d-inline-flex btn disabled w-100 align-items-center justify-content-center border-dark bg-dark-subtle fw-bold"><i class="fas fa-2x fa-file-alt pe-2"></i>{{ submenus.submenus_name }}</div>
         </div>
-        <div class="col-sm-12 col-md-4 order-md-3 text-center pt-2">
+        <div class="col-6 col-md-4 order-md-3 text-center pt-2">
             <a href="{{url_for('add_items', menus_id=menus_id, new_item=False) }}"
                 class="d-inline-flex btn w-100 align-items-center justify-content-center text-bg-success">Add
                 Item <i class="fas fa-2x fa-plus-square right ps-3"></i></a>
