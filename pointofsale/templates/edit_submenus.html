@@ -34,10 +34,19 @@
                     <div class="rows">
                         <form action="{{ url_for('edit_submenus', submenus_id=submenus.id) }}" method="POST">
                             <div class="col-12 py-3 text-start">
-                                <label for="menus_name">In Menu</label>
-                                <input type="text" class="form-control" id="menus_name" name="menus_name"
-                                    minlength="3" maxlength="25" required aria-describedby="menus_name"
-                                    value="{{ menus_name }}" disabled>
+
+                                
+                                <label for="menus_name">Currently In Menu: {{ menus_name }}</label>
+                                <select class="form-select" id="menus_name" name="menus_name" aria-label="Default select example">
+                                    <option value="{{ menus_name.id }}" selected>Choose a Menu from the dropdown</option>
+
+                                    {% for menu in menus_list %}
+
+                                    <option value="{{ menu.id}}">{{ menu.menus_name}}</option>
+                                    
+                                    {% endfor %}
+
+                                </select>
                             </div>
                             <div class="col-12 py-3 text-start">
                                 <label for="submenus_name">Sub-Menus Name</label>

@@ -95,14 +95,16 @@ def edit_submenus(submenus_id):
     # Get the selected submenu and associated menu.
     submenus=Submenus.query.get_or_404(submenus_id)
     menus_name=Menus.query.get_or_404(submenus.menus_id)
+    menus_list=list(Menus.query.order_by(Menus.menus_name).all())
     # If the method is POST then update postgresql database with changes.
     if request.method == "POST":
+        submenus.menus_id=request.form.get("menus_name"),
         submenus.submenus_name=request.form.get("submenus_name"),
         submenus.submenus_description=request.form.get("submenus_description")
         db.session.add(submenus)
         db.session.commit()
         return redirect(url_for("view_submenus", submenus_id=submenus.menus_id))
-    return render_template("edit_submenus.html", submenus=submenus, menus_name=menus_name)
+    return render_template("edit_submenus.html", submenus=submenus, menus_name=menus_name, menus_list=menus_list)
 
 
 @app.route("/delete_submenus/<int:submenus_id>", methods=["GET", "POST"])
