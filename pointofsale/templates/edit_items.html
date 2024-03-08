@@ -35,10 +35,17 @@
                         <form action="{{ url_for('edit_items', submenus_id=items.id) }}" method="POST"
                             class="form-floating">
                             <div class="col-12 py-3 text-start">
-                                <label for="submenus_name">In Sub-Menu</label>
-                                <input type="text" class="form-control" id="submenus_name" name="submenus_name"
-                                    minlength="3" maxlength="25" required aria-describedby="items_name"
-                                    value="{{ submenus_name }}" disabled>
+                                <label for="submenus_name">Currently In Sub-Menu: {{ submenus_name }}</label>
+                                <select class="form-select" id="submenus_name" name="submenus_name" aria-label="Default select example">
+                                    <option value="{{ submenus_name.id }}" selected>Choose a Menu from the dropdown</option>
+
+                                    {% for submenu in submenus_list %}
+
+                                    <option value="{{ submenu.id}}">{{ submenu.submenus_name}}</option>
+                                    
+                                    {% endfor %}
+
+                                </select>
                             </div>
                             <div class="col-12 py-3 text-start">
                                 <label for="items_name">Item Name</label>
