@@ -242,8 +242,9 @@ def remove_item(item_id):
 @app.route("/transaction/<total_price>/<total_costprice>")
 # Adds the current order to the transactions table by calling the add_transactions function.
 def transaction(total_price, total_costprice):
+    if total_price != '0':
         add_transactions(total_price, total_costprice)
-        return render_template("current_order.html", total_price=0)
+    return redirect(url_for("current_order", total_price=0))
 
 
 def add_transactions(total_price, total_costprice):
