@@ -52,15 +52,18 @@ def edit_menus(menus_id):
     return render_template("edit_menus.html", menus=menus)
 
 
-@app.route("/delete_menus/<int:menus_id>", methods=["GET", "POST"])
-def delete_menus(menus_id):
+@app.route("/delete_menus/<int:menus_id>, <submenu_exists>", methods=["GET", "POST"])
+def delete_menus(menus_id, submenu_exists):
     # Delete the selected menu.
     menus=Menus.query.get_or_404(menus_id)
     if request.method == "POST":
+        submenu_list = list(Submenus.query.filter_by(menus_id=menus_id).all())
+        if submenu_list != []:
+            return redirect(url_for("delete_menus",menus_id=menus_id, submenu_exists=True, menus=menus))
         db.session.delete(menus)
         db.session.commit()
         return redirect(url_for("main_menu"))
-    return render_template("delete_menus.html", menus=menus)
+    return render_template("delete_menus.html", menus_id=menus_id, submenu_exists=submenu_exists, menus=menus)
 
 
 @app.route("/add_submenus/<int:submenus_id>/<new_submenu>", methods=["GET", "POST"])
