@@ -27,12 +27,22 @@
 <div class="container ">
     <div class="row">
         <div class="col-12 text-center py-4">
+
+            {% if item_exists == 'True' %}
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Cannot delete Sub-Menu. Please delete/move Items before trying again.</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            {% endif %}
+
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
                     <h5 class="card-title">DELETE SUB-MENU</h5>
                     <p class="card-text">
                     <div class="rows">
-                        <form action="{{ url_for('delete_submenus', submenus_id=submenus.id) }}" method="POST">
+                        <form action="{{ url_for('delete_submenus', submenus_id=submenus.id, item_exists=False) }}" method="POST">
                             <div class="col-12 py-3">
                                 <p aria-describedby="delete_description">Deleting a Sub-Menu deletes all associated
                                     Items.</p>

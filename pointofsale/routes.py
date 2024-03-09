@@ -110,11 +110,14 @@ def edit_submenus(submenus_id):
     return render_template("edit_submenus.html", submenus=submenus, menus_name=menus_name, menus_list=menus_list)
 
 
-@app.route("/delete_submenus/<int:submenus_id>", methods=["GET", "POST"])
-def delete_submenus(submenus_id):
+@app.route("/delete_submenus/<int:submenus_id>/<item_exists>", methods=["GET", "POST"])
+def delete_submenus(submenus_id, item_exists):
     # Delete the selected submenu if method is POST.
     submenus=Submenus.query.get_or_404(submenus_id)
     if request.method == "POST":
+        item_list = list(Items.query.filter_by(submenus_id=submenus_id).all())
+        if item_list != []:
+            return redirect(url_for("delete_submenus",submenus_id=submenus_id, item_exists=True, submenus=submenus))
         current_order = list(Currentorder.query.order_by(Currentorder.id).all())
         submenu_items = list(Items.query.filter_by(submenus_id=submenus_id).all())
         for items in submenu_items:
@@ -124,7 +127,7 @@ def delete_submenus(submenus_id):
         db.session.delete(submenus)
         db.session.commit()
         return redirect(url_for("view_submenus", submenus_id=submenus.menus_id))
-    return render_template("delete_submenus.html", submenus=submenus)
+    return render_template("delete_submenus.html", submenus_id=submenus_id, item_exists=item_exists, submenus=submenus)
 
 
 @app.route("/view_items/<int:menus_id>", methods=["GET", "POST"])
@@ -173,19 +176,19 @@ def edit_items(submenus_id):
     return render_template("edit_items.html", submenus_id=submenus_id, items=items, submenus_name=submenus_name, submenus_list=submenus_list)
 
 
-@app.route("/delete_items/<int:submenus_id>", methods=["GET", "POST"])
-def delete_items(submenus_id):
+@app.route("/delete_items/<int:submenus_id>/<in_currentorder>", methods=["GET", "POST"])
+def delete_items(submenus_id, in_currentorder):
     # Delete the selected item if method is POST.
     items=Items.query.get_or_404(submenus_id)
     if request.method == "POST":
         current_order = list(Currentorder.query.order_by(Currentorder.id).all())
-        for item in current_order:
-            if item.item_id == items.id:
-                db.session.delete(item)
-        db.session.delete(items)
-        db.session.commit()
+        if current_order != []:
+            return redirect(url_for("delete_items",submenus_id=submenus_id, in_currentorder=True, items=items))
+        else:
+            db.session.delete(items)
+            db.session.commit()
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
-    return render_template("delete_items.html", submenus_id=submenus_id, items=items)
+    return render_template("delete_items.html", submenus_id=submenus_id, in_currentorder=in_currentorder, items=items)
 
 
 @app.route("/current_order")

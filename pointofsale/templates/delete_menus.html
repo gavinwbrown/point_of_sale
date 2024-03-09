@@ -33,7 +33,7 @@
             {% if submenu_exists == 'True' %}
 
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Cannot delete a Menu with Sub-Menus as part of it</strong>
+                <strong>Cannot delete Menu. Please delete/move Submenus before trying again.</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -46,8 +46,7 @@
                     <div class="rows">
                         <form action="{{ url_for('delete_menus', menus_id=menus.id, submenu_exists='False') }}" method="POST">
                             <div class="col-12 py-3">
-                                <p aria-describedby="delete_description">Deleting a Menu deletes all associated
-                                    Sub-Menus and Items.</p>
+                                <p aria-describedby="delete_description">Deleting a Menu is a permanent action.</p>
                                 <p aria-describedby="delete_description">Red button to confirm deletion of
                                     {{menus.menus_name }}.</p>
                                 <div class="col-12 py-3">

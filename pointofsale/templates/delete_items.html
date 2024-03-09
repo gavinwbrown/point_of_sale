@@ -27,12 +27,22 @@
 <div class="container ">
     <div class="row">
         <div class="col-12 text-center py-4">
+
+            {% if in_currentorder == 'True' %}
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Cannot delete Item. Item is in the Current Order. Please process the order before trying again.</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            {% endif %}
+
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
                     <h5 class="card-title">DELETE ITEM</h5>
                     <p class="card-text">
                     <div class="rows">
-                        <form action="{{ url_for('delete_items', submenus_id=submenus_id) }}" method="POST">
+                        <form action="{{ url_for('delete_items', submenus_id=submenus_id, in_currentorder=False) }}" method="POST">
                             <div class="col-12 py-3">
                                 <p aria-describedby="delete_description">Deleting an Item deletes just the item.</p>
                                 <p aria-describedby="delete_description">Red button to confirm deletion of

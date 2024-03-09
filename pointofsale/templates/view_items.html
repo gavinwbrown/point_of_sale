@@ -54,7 +54,7 @@
                     <a href="{{url_for('edit_items', submenus_id=item.id) }}"
                         class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-success btn-sm">Edit
                         <i class="fas fa-2x fa-edit right ps-3"></i></a>
-                    <a href="{{ url_for('delete_items', submenus_id=item.id) }}"
+                    <a href="{{ url_for('delete_items', submenus_id=item.id, in_currentorder=False) }}"
                         class="d-inline-flex col-4 align-items-center justify-content-center btn text-bg-danger btn-sm">Delete
                         <i class="fas fa-2x fa-minus-square right ps-2"></i></a>
                     <a href="{{ url_for('addto_order', item_id=item.id, submenus_id=submenus.id, item_name=item.items_name, item_price=item.items_price, item_costprice=item.items_costprice) }}"
