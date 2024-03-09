@@ -1,12 +1,12 @@
-"""
- this file is the main entry point for the application. 
- creates the flask application and the database object.
- also imports the routes module from the pointofsale package.
+""" This file is the main entry point for the application. 
+ Creates the flask application and the database object.
+ Also imports the routes module from the pointofsale package.
 """
 
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+
 if os.path.exists("env.py"):
     import env
 
@@ -23,6 +23,7 @@ else:
 
 
 db = SQLAlchemy(app)
+
 from pointofsale import routes
 
 

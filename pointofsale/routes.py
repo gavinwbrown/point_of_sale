@@ -1,15 +1,15 @@
 # Import necessary modules.
-from flask import render_template, request, redirect, url_for
-from pointofsale import app, db
-from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
-import csv, os, datetime
-
-# Import necessary modules for email.
+import os
+import csv
 import smtplib
 import mimetypes
-from email.mime.multipart import MIMEMultipart
+import datetime
 from email import encoders
 from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from pointofsale import app, db
+from flask import render_template, request, redirect, url_for
+from pointofsale.models import Menus, Submenus, Items, Currentorder, Transactions
 
 
 @app.route("/")
@@ -192,7 +192,7 @@ def delete_items(submenus_id, in_currentorder):
 
 
 @app.route("/current_order")
-# Returns the current order and it's total price.
+# Returns the current order and it's total price/cost price.
 def current_order():
     current_order = list(Currentorder.query.order_by(Currentorder.id).all())
     total_price, total_costprice=total(current_order)
@@ -273,7 +273,7 @@ def add_transactions(total_price, total_costprice):
 
 
 @app.route("/reset", methods=["GET", "POST"])
-# resets the whole database.
+# Resets the whole database.
 def reset():
     if request.method == "POST":
         transactions = list(Transactions.query.order_by(Transactions.id).all())
@@ -324,7 +324,7 @@ def email_sales(send_address):
             delete_item = Transactions.query.get_or_404(sale.id)
             db.session.delete(delete_item)
         db.session.commit()
-        # Send email with sales data
+        # Send email with sales data.
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
         # Create the body of the message plaintext and HTML.
         emailfrom = "gavin.brown@4uxdesign.com"
