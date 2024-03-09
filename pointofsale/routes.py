@@ -112,6 +112,12 @@ def delete_submenus(submenus_id):
     # Delete the selected submenu if method is POST.
     submenus=Submenus.query.get_or_404(submenus_id)
     if request.method == "POST":
+        current_order = list(Currentorder.query.order_by(Currentorder.id).all())
+        submenu_items = list(Items.query.filter_by(submenus_id=submenus_id).all())
+        for items in submenu_items:
+            for item in current_order:
+                if item.item_id == items.id:
+                    db.session.delete(item)
         db.session.delete(submenus)
         db.session.commit()
         return redirect(url_for("view_submenus", submenus_id=submenus.menus_id))
@@ -169,6 +175,10 @@ def delete_items(submenus_id):
     # Delete the selected item if method is POST.
     items=Items.query.get_or_404(submenus_id)
     if request.method == "POST":
+        current_order = list(Currentorder.query.order_by(Currentorder.id).all())
+        for item in current_order:
+            if item.item_id == items.id:
+                db.session.delete(item)
         db.session.delete(items)
         db.session.commit()
         return redirect(url_for("view_items", menus_id=items.submenus_id, items=items))
