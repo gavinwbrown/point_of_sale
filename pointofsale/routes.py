@@ -278,8 +278,6 @@ def reset():
     if request.method == "POST":
         transactions = list(Transactions.query.order_by(Transactions.id).all())
         current_order = list(Currentorder.query.order_by(Currentorder.id).all())
-        items = list(Items.query.order_by(Items.id).all())
-        submenus = list(Submenus.query.order_by(Submenus.id).all())
         menus = list(Menus.query.order_by(Menus.id).all())
         for transaction in transactions:
             delete_transaction = Transactions.query.get_or_404(transaction.id)
@@ -287,12 +285,6 @@ def reset():
         for order in current_order:
             delete_order = Currentorder.query.get_or_404(order.id)
             db.session.delete(delete_order)
-        for item in items:
-            delete_item = Items.query.get_or_404(item.id)
-            db.session.delete(delete_item)
-        for submenu in submenus:
-            delete_submenu = Submenus.query.get_or_404(submenu.id)
-            db.session.delete(delete_submenu)
         for menu in menus:
             delete_menu = Menus.query.get_or_404(menu.id)
             db.session.delete(delete_menu)
