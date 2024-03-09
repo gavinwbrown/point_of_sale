@@ -35,7 +35,7 @@
                     </p>All you need is an internet connection and a way of taking payments such as Stripe.</p>
                     <p>No need for an expensive till, simply manage your sales through Expresso and a suitable banking
                         app, all from your phone.</p>
-                    <p>The default setup is for a small coffeeshop, edit it to build
+                    <p>The default setup is for a market stall coffeeshop, edit it to build
                         a POS system that works for you.</p>
                 </div>
             </div>
@@ -59,12 +59,21 @@
                             sales for the day can be
                             emailed as a .csv file that can be opened by Excel, Google Sheets and many other suitable
                             applications.</p>
-                        <p class="fw-bold">Click/tap 'Menus' to get started</p>
+                        <p>Click/Tap the coffee cup top left to come back to this screen at anytime.</p>
+                        <p class="fw-bold">Click/Tap 'Menus' (tap the 3 lines top right first if you're on a smaller device) to get started.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+{% endblock %}
+
+{% block footer%}
+
+<div class="d-flex text-end col-6 text-white align-items-center justify-content-end">
+    <a href="{{ url_for('reset') }}" class="d-inline-flex align-items-center justify-content-center btn text-bg-danger">RESET APP</a>
 </div>
 
 {% endblock %}
