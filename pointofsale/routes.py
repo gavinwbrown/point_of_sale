@@ -8,7 +8,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from pointofsale import app, db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, send_file
 from pointofsale.models import Menus, Submenus, Items
 from pointofsale.models import Currentorder, Transactions
 
@@ -389,6 +389,11 @@ def email_sales(send_address):
         server.quit()
         return redirect(url_for("main_menu"))
     return render_template("email_sales.html", send_address=send_address)
+
+
+@app.route("/static/favicon.ico") 
+def getFavicon(): 
+    return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
 @app.route("/startscreen")
