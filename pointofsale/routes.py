@@ -169,11 +169,23 @@ def add_items(menus_id, new_item):
             items_costprice=request.form.get("items_costprice"),
             submenus_id=menus_id
         )
+
+        # Checks if the price is a number. If not flags this but writes 0 to db.
+        not_number = False
+        if items_price is not float and items_price is not int:
+            items_price = 0
+            not_number = True
+        else:
+            items_price = round(items_price, 2)
+
+
+
+
         db.session.add(items)
         db.session.commit()
         # Flags new_item as True. To display alert message.
         return redirect(url_for("add_items", menus_id=menus_id,
-                                submenus=submenus, new_item=True))
+                                submenus=submenus, new_item=True, not_number=not_number))
     return render_template("add_items.html", menus_id=menus_id,
                            submenus=submenus, new_item=new_item)
 
