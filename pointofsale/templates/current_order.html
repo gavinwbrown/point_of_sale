@@ -35,10 +35,10 @@
                     <div class="col-5 d-inline-flex align-items-center justify-content-center">
                         <h5 class="card-title text-uppercase text-break text-wrap">{{ order.currentorder_name }}</h5>
                     </div>
-                    <div class="col-3 d-inline-flex align-items-center justify-content-end">
+                    <div class="col-3 d-inline-flex align-items-center justify-content-end me-1">
                         <h3 class="card-text">{{ '%0.2f'|format(order.currentorder_price) }}</h3>
                     </div>
-                    <div class="col-4 text-end">
+                    <div class="col-4 text-end d-inline-flex align-items-center justify-content-end">
                         <a href="{{ url_for('remove_item', item_id=order.id) }}"
                             class="d-inline-flex align-items-center justify-content-center btn text-bg-danger btn-sm">Remove
                             <i class="fas fa-2x fa-minus-square right ps-2"></i></a>
