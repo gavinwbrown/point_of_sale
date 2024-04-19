@@ -185,7 +185,7 @@ def add_items(menus_id, new_item):
         return redirect(url_for("add_items", menus_id=menus_id,
                                 submenus=submenus, new_item=True, not_number=not_number))
     return render_template("add_items.html", menus_id=menus_id,
-                           submenus=submenus, new_item=new_item)
+                           submenus=submenus, new_item=new_item, not_number=False)
 
 
 @app.route("/edit_items/<int:submenus_id>", methods=["GET", "POST"])
