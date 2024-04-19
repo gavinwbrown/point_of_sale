@@ -37,15 +37,6 @@
 
             {% endif %}
 
-            {% if not_number == 'True' %}
-            
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Price was not in correct format. Price added as £0. Please edit item to correct this. Format should be 00.00.</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
-            {% endif %}
-
             <!--
                 Here the new_item variable is set to boolean True
                  triggering an alert confirming the new item has
@@ -57,7 +48,7 @@
                 <div class="card-body">
                     <h5 class="card-title">New Item</h5>
                     <p class="card-text">
-                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
+                    <form class="row form-floating" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
                         method="POST">
                         <div class="col-12 py-3">
 
@@ -73,17 +64,18 @@
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_name" name="items_name" minlength="3"
                                 maxlength="25" required aria-describedby="item_name"
-                                placeholder="Item Name (3-25 characters)">
+                                placeholder="Name (3-25 characters)">
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_description" name="items_description"
                                 minlength="3" maxlength="29" required aria-describedby="items_description"
-                                placeholder="Item Description (3-29 characters)">
+                                placeholder="Description (3-29 characters)">
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_price" name="items_price" minlength="3"
                                 maxlength="29" required aria-describedby="items_price"
-                                placeholder="Item Price (enter if format 00.00)">
+                                placeholder="Price (format 00.00). Incorrect format enters as 0.">
+                            <label for="items_price">incorrect format enters as 0</label>
                         </div>
                         <div class="col-12 py-3">
                             <input type="text" class="form-control" id="items_costprice" name="items_costprice"
