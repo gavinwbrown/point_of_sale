@@ -171,10 +171,10 @@ def add_items(menus_id, new_item):
         )
 
         # Checks if the price is a number. If not flags this but writes 0 to db.
-        not_number = False
+        not_number=False
         if items.items_price is not float and items.items_price is not int:
             items.items_price = 0
-            not_number = True
+            not_number=True
         else:
             items.items_price = round(items.items_price, 2)
         
