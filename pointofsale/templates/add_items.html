@@ -39,15 +39,12 @@
 
             {% if not_number == 'True' %}
             
-
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Price was not in correct format. Price added as £0. Please edit item to correct this. Format should be 00.00.</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
             {% endif %}
-
-            <p>{{ not_number }}</p>
 
             <!--
                 Here the new_item variable is set to boolean True
@@ -107,5 +104,7 @@
         </div>
     </div>
 </div>
+
+<p>NOT NUMBER: {{ not_number }} </p>
 
 {% endblock %}
