@@ -28,6 +28,13 @@
     <div class="row">
         <div class="col-12 text-center py-4">
 
+            <!--
+                Here the new_item variable is set to boolean True
+                triggering an alert confirming the new item has
+                been created. Jinja2 evaluates
+                as a string ie 'True'.
+            -->
+
             {% if new_item == 'True' %}
 
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -36,13 +43,6 @@
             </div>
 
             {% endif %}
-
-            <!--
-                Here the new_item variable is set to boolean True
-                 triggering an alert confirming the new item has
-                 been created (see code above). Jinja2 evaluates
-                as a string ie 'True'.
-            -->
 
             <div class="card border-dark bg-dark-subtle">
                 <div class="card-body">
