@@ -178,7 +178,7 @@ def add_items(menus_id, new_item):
         if items.items_costprice is not float and items.items_costprice is not int:
             items.items_costprice = 0
         else:
-            items.items_price = round(items.items_price, 2)
+            items.items_costprice = round(items.items_price, 2)
         db.session.add(items)
         db.session.commit()
         # Flags new_item as True. To display alert message.
@@ -201,6 +201,16 @@ def edit_items(submenus_id):
         items.items_description = request.form.get("items_description"),
         items.items_price = request.form.get("items_price"),
         items.items_costprice = request.form.get("items_costprice")
+        # Checks if the item_price is a number. If not writes 0 to db.
+        if items.items_price is not float and items.items_price is not int:
+            items.items_price = 0
+        else:
+            items.items_price = round(items.items_price, 2)
+        # Checks if the cost_price is a number. If not writes 0 to db.
+        if items.items_costprice is not float and items.items_costprice is not int:
+            items.items_costprice = 0
+        else:
+            items.items_costprice = round(items.items_price, 2)
         db.session.add(items)
         db.session.commit()
         return redirect(url_for("view_items",
