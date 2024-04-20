@@ -205,12 +205,12 @@ def edit_items(submenus_id):
         number_check2=items.items_costprice
         # Checks if the item_price is a number. If not writes 0 to db.
         if isinstance(number_check1, int) or isinstance(number_check1, float):
-            items.items_price=round(items.items_price,2)
+            items.items_price=round(number_check1, 2)
         else:
             items.items_price=0
         # Checks if the cost_price is a number. If not writes 0 to db.
         if isinstance(number_check2, int) or isinstance(number_check2, float):
-            items.items_costprice=round(items.items_costprice,2)
+            items.items_costprice=round(number_check2, 2)
         else:
             items.items_costprice=0
         db.session.add(items)
