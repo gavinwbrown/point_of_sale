@@ -199,8 +199,8 @@ def edit_items(submenus_id):
         items.submenus_id = request.form.get("submenus_name"),
         items.items_name = request.form.get("items_name"),
         items.items_description = request.form.get("items_description"),
-        items.items_price = float(request.form.get("items_price"), 2),
-        items.items_costprice = float(request.form.get("items_costprice"), 2)
+        items.items_price = round(float(request.form.get("items_price")), 2),
+        items.items_costprice = round(float(request.form.get("items_costprice")), 2)
         # Update the database with the new values.
         db.session.add(items)
         db.session.commit()
