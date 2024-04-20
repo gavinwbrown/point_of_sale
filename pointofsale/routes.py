@@ -199,22 +199,8 @@ def edit_items(submenus_id):
         items.submenus_id = request.form.get("submenus_name"),
         items.items_name = request.form.get("items_name"),
         items.items_description = request.form.get("items_description"),
-        items.items_price = request.form.get("items_price"),
-        items.items_costprice = request.form.get("items_costprice")
-        number_check1=items.items_price
-        number_check2=items.items_costprice
-        # Checks if the item_price is a number. If not writes 0 to db.
-        try:
-            number_check1=round(float(number_check1), 2)
-            items.items_price=number_check1
-        except:
-            items.items_price=0
-        # Checks if the cost_price is a number. If not writes 0 to db.
-        try:
-            number_check2=round(float(number_check2), 2)
-            items.items_costprice=number_check2
-        except:
-            items.items_costprice=0
+        items.items_price = float(request.form.get("items_price"), 2),
+        items.items_costprice = float(request.form.get("items_costprice"), 2)
         # Update the database with the new values.
         db.session.add(items)
         db.session.commit()
