@@ -170,15 +170,15 @@ def add_items(menus_id, new_item):
             submenus_id=menus_id
         )
         # Checks if the item_price is a number. If not writes 0 to db.
-        if isinstance(items.item_price, int) or isinstance(items.item_price, float):
-            items.item_price=round(items.item_price,2)
+        if isinstance(items.items_price, int) or isinstance(items.items_price, float):
+            items.items_price=round(items.items_price,2)
         else:
-            items.item_price=0
+            items.items_price=0
         # Checks if the cost_price is a number. If not writes 0 to db.
-        if isinstance(items.item_costprice, int) or isinstance(items.item_costprice, float):
-            items.item_costprice=round(items.item_costprice,2)
+        if isinstance(items.items_costprice, int) or isinstance(items.items_costprice, float):
+            items.items_costprice=round(items.items_costprice,2)
         else:
-            items.item_costprice=0
+            items.items_costprice=0
         db.session.add(items)
         db.session.commit()
         # Flags new_item as True. To display alert message.
@@ -202,15 +202,15 @@ def edit_items(submenus_id):
         items.items_price = request.form.get("items_price"),
         items.items_costprice = request.form.get("items_costprice")
         # Checks if the item_price is a number. If not writes 0 to db.
-        if isinstance(items.item_price, int) or isinstance(items.item_price, float):
-            items.item_price=round(items.item_price,2)
+        if isinstance(items.items_price, int) or isinstance(items.items_price, float):
+            items.items_price=round(items.items_price,2)
         else:
-            items.item_price=0
+            items.items_price=0
         # Checks if the cost_price is a number. If not writes 0 to db.
-        if isinstance(items.item_costprice, int) or isinstance(items.item_costprice, float):
-            items.item_costprice=round(items.item_costprice,2)
+        if isinstance(items.items_costprice, int) or isinstance(items.items_costprice, float):
+            items.items_costprice=round(items.items_costprice,2)
         else:
-            items.item_costprice=0
+            items.items_costprice=0
         db.session.add(items)
         db.session.commit()
         return redirect(url_for("view_items",
