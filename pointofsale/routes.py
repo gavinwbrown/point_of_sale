@@ -201,13 +201,15 @@ def edit_items(submenus_id):
         items.items_description = request.form.get("items_description"),
         items.items_price = request.form.get("items_price"),
         items.items_costprice = request.form.get("items_costprice")
+        number_check1=items.items_price
+        number_check2=items.items_costprice
         # Checks if the item_price is a number. If not writes 0 to db.
-        if isinstance(items.items_price, int) or isinstance(items.items_price, float):
+        if isinstance(number_check1, int) or isinstance(number_check1, float):
             items.items_price=round(items.items_price,2)
         else:
             items.items_price=0
         # Checks if the cost_price is a number. If not writes 0 to db.
-        if isinstance(items.items_costprice, int) or isinstance(items.items_costprice, float):
+        if isinstance(number_check2, int) or isinstance(number_check2, float):
             items.items_costprice=round(items.items_costprice,2)
         else:
             items.items_costprice=0
