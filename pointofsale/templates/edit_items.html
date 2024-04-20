@@ -60,13 +60,13 @@
                                     value="{{ items.items_description }}">
                             </div>
                             <div class="col-12 py-3 text-start">
-                                <label for="items_price">Price in format £00.00</label>
+                                <label for="items_price">price in format 00.00</label>
                                 <input type="number" step="0.01" class="form-control" id="items_price" name="items_price"
                                     required aria-describedby="item_price"
                                     value="{{ items.items_price }}">
                             </div>
-                            <div class="col-12 py-3 text-start">
-                                <label for="items_price">Cost Price in format £00.00</label>
+                            <div class="col-12 py-3 text-start form-floating">
+                                <label for="items_price">cost price in format 00.00</label>
                                 <input type="number" step="0.01" class="form-control" id="items_costprice" name="items_costprice"
                                     required aria-describedby="item_cost_price"
                                     value="{{ items.items_costprice }}">
