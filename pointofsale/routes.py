@@ -169,16 +169,7 @@ def add_items(menus_id, new_item):
             items_costprice=request.form.get("items_costprice"),
             submenus_id=menus_id
         )
-        # Checks if the item_price is a number. If not writes 0 to db.
-        if isinstance(items.items_price, int) or isinstance(items.items_price, float):
-            items.items_price=round(items.items_price,2)
-        else:
-            items.items_price=0
-        # Checks if the cost_price is a number. If not writes 0 to db.
-        if isinstance(items.items_costprice, int) or isinstance(items.items_costprice, float):
-            items.items_costprice=round(items.items_costprice,2)
-        else:
-            items.items_costprice=0
+        # Update the database with the new values.
         db.session.add(items)
         db.session.commit()
         # Flags new_item as True. To display alert message.
