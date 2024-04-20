@@ -48,7 +48,7 @@
                 <div class="card-body">
                     <h5 class="card-title">New Item</h5>
                     <p class="card-text">
-                    <form class="row form-floating" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
+                    <form class="row" action="{{ url_for('add_items',menus_id=menus_id, new_item=True) }}"
                         method="POST">
                         <div class="col-12 py-3">
 
@@ -71,13 +71,15 @@
                                 minlength="3" maxlength="29" required aria-describedby="items_description"
                                 placeholder="Description (3-29 characters)">
                         </div>
-                        <div class="col-12 py-3">
+                        <div class="col-12 py-3 form-floating">
+                            <label for="items_price">incorrect price format saves as 0</label>
                             <input type="text" class="form-control" id="items_price" name="items_price" minlength="3"
                                 maxlength="29" required aria-describedby="items_price"
-                                placeholder="Price (format 00.00). Incorrect format enters as 0.">
-                            <label for="items_price">incorrect format enters as 0</label>
+                                placeholder="Price (format 00.00)">
+                            
                         </div>
-                        <div class="col-12 py-3">
+                        <div class="col-12 py-3 form-floating">
+                            <label for="items_costprice">incorrect cost price format saves as 0</label>
                             <input type="text" class="form-control" id="items_costprice" name="items_costprice"
                                 minlength="3" maxlength="29" required aria-describedby="items_cost_price"
                                 placeholder="Item Cost Price (enter if format 00.00)">

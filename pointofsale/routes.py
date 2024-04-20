@@ -169,9 +169,14 @@ def add_items(menus_id, new_item):
             items_costprice=request.form.get("items_costprice"),
             submenus_id=menus_id
         )
-        # Checks if the price is a number. If not flags this but writes 0 to db.
+        # Checks if the item_price is a number. If not writes 0 to db.
         if items.items_price is not float and items.items_price is not int:
             items.items_price = 0
+        else:
+            items.items_price = round(items.items_price, 2)
+        # Checks if the cost_price is a number. If not writes 0 to db.
+        if items.items_costprice is not float and items.items_costprice is not int:
+            items.items_costprice = 0
         else:
             items.items_price = round(items.items_price, 2)
         db.session.add(items)
