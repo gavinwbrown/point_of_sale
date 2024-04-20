@@ -204,15 +204,18 @@ def edit_items(submenus_id):
         number_check1=items.items_price
         number_check2=items.items_costprice
         # Checks if the item_price is a number. If not writes 0 to db.
-        if isinstance(number_check1, int) or isinstance(number_check1, float):
-            items.items_price=round(number_check1, 2)
-        else:
+        try:
+            number_check1=round(float(number_check1), 2)
+            items.items_price=number_check1
+        except:
             items.items_price=0
         # Checks if the cost_price is a number. If not writes 0 to db.
-        if isinstance(number_check2, int) or isinstance(number_check2, float):
-            items.items_costprice=round(number_check2, 2)
-        else:
+        try:
+            number_check2=round(float(number_check2), 2)
+            items.items_costprice=number_check2
+        except:
             items.items_costprice=0
+        # Update the database with the new values.
         db.session.add(items)
         db.session.commit()
         return redirect(url_for("view_items",
