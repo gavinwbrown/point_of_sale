@@ -386,6 +386,7 @@ def email_sales(send_address):
         msg.attach(attachment)
         # Send the message via SMTP server.
         server = smtplib.SMTP("smtp-mail.outlook.com", 587)
+        server.ehlo()
         server.starttls()
         server.login(username, password)
         server.sendmail(emailfrom, send_address, msg.as_string())
