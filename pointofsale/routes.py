@@ -363,7 +363,8 @@ def email_sales(send_address):
         emailfrom = "iamslowtrain@outlook.com"
         filetosend = "sales_data.csv"
         username = "iamslowtrain@outlook.com"
-        password = os.getenv("EMAIL")
+        password = os.environ.get('EMAIL')
+        print(password,"***",username)
         msg = MIMEMultipart()
         msg["From"] = emailfrom
         msg["To"] = send_address
