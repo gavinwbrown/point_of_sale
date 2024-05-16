@@ -360,11 +360,10 @@ def email_sales(send_address):
         # Send email with sales data.
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
         # Create the body of the message plaintext and HTML.
-        emailfrom = "gavin.brown@4uxdesign.com"
+        emailfrom = "iamslowtrain@outlook.com"
         filetosend = "sales_data.csv"
-        username = "gavin.brown@4uxdesign.com"
+        username = "iamslowtrain@outlook.com"
         password = os.getenv("EMAIL")
-        print(username,"***", password)
         msg = MIMEMultipart()
         msg["From"] = emailfrom
         msg["To"] = send_address
@@ -385,7 +384,7 @@ def email_sales(send_address):
                               filename=filetosend)
         msg.attach(attachment)
         # Send the message via SMTP server.
-        server = smtplib.SMTP("smtp.gmail.com:587")
+        server = smtplib.SMTP("smtp-mail.outlook.com", 587)
         server.starttls()
         server.login(username, password)
         server.sendmail(emailfrom, send_address, msg.as_string())
